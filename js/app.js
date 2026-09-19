@@ -218,7 +218,6 @@ function viewLoading() {
       <span class="sk line" style="width:54%"></span>
       <span class="sk line" style="width:63%"></span>
     </div>
-    <div class="loader-note tiny">The plan is already built and checked. Only the price is fetched live.</div>
   </div>`;
 }
 

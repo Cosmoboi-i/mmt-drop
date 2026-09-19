@@ -426,7 +426,6 @@ body.handoff-in #phone{animation:handoff .42s cubic-bezier(.2,.7,.3,1)}
 .loader-sub{font-size:var(--fs-small);color:var(--color-text-secondary);max-width:280px}
 .loader-bars{width:220px;margin-top:var(--space-card-gap);display:flex;flex-direction:column;align-items:center;gap:2px}
 .loader-bars .sk.line{display:block}
-.loader-note{max-width:260px;margin-top:var(--space-inner)}
 
 /* ---------- "inspired by" chip ---------- */
 .inspired{
