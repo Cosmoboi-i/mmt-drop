@@ -4,8 +4,8 @@
 
 const POST = {
   id: 'DW8x2kQz1ab',
-  user: 'manshuuuu',
-  place: 'Tu Lan Caves System',
+  user: 'mohak',
+  place: 'Borra Caves',
   captionStruck: 'Indiana Jones',
   caption: 'Indian Mohak',
   url: 'https://www.instagram.com/p/DW8x2kQz1ab/',
@@ -137,7 +137,10 @@ function postScreen() {
     <button class="ig-menu" aria-label="More"><i></i><i></i></button>
   </div>
 
-  <div class="ig-media">${ART.cave}</div>
+  <div class="ig-media">
+    <img src="../assets/borra-caves.jpg" alt="Inside Borra Caves"
+         onerror="this.replaceWith(Object.assign(document.createElement('div'),{innerHTML:ART.cave}).firstChild)">
+  </div>
 
   <div class="ig-actions">
     <button aria-label="Like">${ICON.heart}</button>

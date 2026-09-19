@@ -66,6 +66,13 @@ reel → itinerary association the link resolver uses, so pasting the post URL i
 home screen lands on the same plan. Reach it from the MMT home screen via "See it from the
 reel side", or open `demo/index.html` directly.
 
+## Booking as a group
+
+Any trip card can be turned into a group booking: "Bring your group onto this booking" starts the
+group, opens the invite sheet and leads to the group page, where friends vote on dates and tier
+against a live per-person price and each person pays their own UPI share. Solo checkout offers the
+same switch. The stages are invite, vote, split pay, booked.
+
 ## Design system
 
 MakeMyTrip-adjacent: Lato, `#008CFF` as the only strong accent, gradient CTAs, white surfaces on light
@@ -83,7 +90,9 @@ budgetTiers, recommendedDateWindows, nearbyAddOns, status), `WatchlistScan`, `Gr
 2. Every template is human-reviewed before it goes live. The prototype shows the reviewing desk and the
    review date on each plan.
 3. Prices are per person, domestic, land-only unless a line says otherwise, and come from MMT inventory
-   at fetch time. In the prototype they are computed from a per-day base and a season factor.
+   at fetch time. In the prototype they are computed from a per-day base, a season factor and an
+   occupancy factor, so the per-person figure falls as the group grows and carries a solo supplement
+   for one traveller.
 4. Creator payouts are modelled as a flat amount per confirmed booking, with view and engagement bonuses
    as an option. The real commercial terms would be negotiated per creator.
 5. Curated (watchlist) templates credit the creator and pay nothing. They are MMT's own itinerary

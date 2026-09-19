@@ -51,10 +51,24 @@ function seededJitter(seed) {
   return 1 + ((x % 61) - 30) / 1000; /* ±3% */
 }
 
-function priceFor(t, tierId, windowId, addOnIds, seq) {
+/* Per-person cost genuinely moves with group size: a solo traveller carries a
+   whole room and cab, sharing spreads them. Illustrative factors. */
+const OCCUPANCY = [
+  { upTo: 1, factor: 1.28, note: 'Solo traveller — single room, no sharing' },
+  { upTo: 2, factor: 1.00, note: 'Twin sharing' },
+  { upTo: 3, factor: 0.96, note: 'Triple sharing, cab split 3 ways' },
+  { upTo: 5, factor: 0.92, note: 'Rooms and transport split across the group' },
+  { upTo: 99, factor: 0.88, note: 'Large group rate, transport split further' }
+];
+function occupancy(pax) {
+  return OCCUPANCY.find(o => pax <= o.upTo) || OCCUPANCY[OCCUPANCY.length - 1];
+}
+
+function priceFor(t, tierId, windowId, addOnIds, seq, pax) {
   const tier = TIERS[tierId] || TIERS.comfort;
   const win = (t.dateWindows.find(w => w.id === windowId)) || { delta: 0, label: 'Custom dates' };
-  const base = t.baseDay * t.days * tier.mult;
+  const occ = occupancy(pax || 2);
+  const base = t.baseDay * t.days * tier.mult * occ.factor;
   const seasoned = base * (1 + win.delta / 100);
   const live = seasoned * seededJitter(t.id + tierId + (windowId || 'custom') + seq);
   const addons = (addOnIds || []).reduce((s, id) => {
@@ -63,7 +77,7 @@ function priceFor(t, tierId, windowId, addOnIds, seq) {
   }, 0);
   const perPerson = Math.round((live + addons) / 50) * 50;
   const listed = Math.round((seasoned * 1.12 + addons) / 50) * 50;
-  return { perPerson, listed, tierLabel: tier.label, windowLabel: win.label, extraDays: (addOnIds || []).reduce((s, id) => {
+  return { perPerson, listed, occupancy: occ, tierLabel: tier.label, windowLabel: win.label, extraDays: (addOnIds || []).reduce((s, id) => {
     const a = t.addOns.find(x => x.id === id); return s + (a ? a.days : 0);
   }, 0) };
 }
@@ -102,6 +116,18 @@ function artSvg(key, seedText) {
       fill="none" stroke="var(--illus-ink)" stroke-width="2" stroke-linejoin="round"
       vector-effect="non-scaling-stroke" opacity=".35"/>
   </svg>`;
+}
+
+/* A template either carries a real photo or falls back to its illustration. */
+function artFor(t, seedText) {
+  if (t.photo) {
+    return `<img class="art-photo" src="${esc(t.photo.src)}" alt="${esc(t.photo.alt)}" loading="lazy">`;
+  }
+  return artSvg(t.art, seedText);
+}
+
+function photoCredit(t) {
+  return t.photo ? `<div class="tiny" style="margin-top:6px">${esc(t.photo.credit)}</div>` : '';
 }
 
 function trustBadge(t) {
@@ -332,7 +358,7 @@ function resolverPanel() {
 function tripRow(t) {
   const c = cr(t.creator);
   return `<div class="card" data-act="openTrip" data-v="${t.id}" style="padding:0;overflow:hidden">
-    <div class="art small" style="border-radius:0">${artSvg(t.art, t.id)}
+    <div class="art small" style="border-radius:0">${artFor(t, t.id)}
       <div class="art-top">${trustBadge(t)}</div>
     </div>
     <div style="padding:12px">
@@ -361,7 +387,7 @@ function viewTrip() {
   if (!t) return viewHome();
   if (S.cardLoading) return tripSkeleton();
 
-  const p = priceFor(t, S.tier, S.windowId, S.addOns, S.fetchSeq);
+  const p = priceFor(t, S.tier, S.windowId, S.addOns, S.fetchSeq, S.travellers);
   const c = cr(t.creator);
   const addOnDays = t.addOns.filter(a => S.addOns.includes(a.id) && a.days > 0);
   const totalDays = t.days + p.extraDays;
@@ -370,7 +396,7 @@ function viewTrip() {
   <div class="screen">
     <a class="backlink" data-act="go" data-v="home">${icon('arrowLeft', 16)} Back</a>
     ${inspiredChip(t)}
-    <div class="art tall">${artSvg(t.art, t.id)}<span class="scrim"></span>
+    <div class="art tall">${artFor(t, t.id)}<span class="scrim"></span>
       <div class="art-top">${trustBadge(t)}</div>
       <div class="art-bottom">
         <div class="big">${esc(t.destination)}</div>
@@ -382,6 +408,7 @@ function viewTrip() {
       ${creditLine(t)}
       <p style="margin-top:8px">${esc(t.summary)}</p>
       <div>${t.vibeTags.map(v => `<span class="tag">${esc(v)}</span>`).join('')}</div>
+      ${photoCredit(t)}
       <div class="divider"></div>
       ${priceBlock(t, p)}
     </div>
@@ -409,7 +436,7 @@ function viewTrip() {
         ${Object.values(TIERS).map(tr => `
           <button class="tierbtn ${S.tier === tr.id ? 'on' : ''}" data-act="setTier" data-v="${tr.id}">
             <div class="l">${tr.label}</div>
-            <div class="p">${money(priceFor(t, tr.id, S.windowId, S.addOns, S.fetchSeq).perPerson)}</div>
+            <div class="p">${money(priceFor(t, tr.id, S.windowId, S.addOns, S.fetchSeq, S.travellers).perPerson)}</div>
           </button>`).join('')}
       </div>
       <div class="kv"><span class="k">Stay</span><span class="v">${esc(t.stays[S.tier])}</span></div>
@@ -427,6 +454,19 @@ function viewTrip() {
           </div>
           <span class="switch ${S.addOns.includes(a.id) ? 'on' : ''}"><i></i></span>
         </div>`).join('')}
+    </div>
+
+    <div class="card">
+      <div class="section-title" style="margin:0 0 4px"><h2>Going as a group?</h2><span class="tiny">split pay</span></div>
+      <p class="sub">Put everyone on the same booking. They vote on dates and tier, and each person pays only their own share by UPI.</p>
+      <div class="steps">
+        <div class="s now"><div class="c">1</div><div class="l">Invite</div></div>
+        <div class="s"><div class="c">2</div><div class="l">Vote</div></div>
+        <div class="s"><div class="c">3</div><div class="l">Split pay</div></div>
+        <div class="s"><div class="c">4</div><div class="l">Booked</div></div>
+      </div>
+      <button class="btn ghost" data-act="startGroup" data-v="${t.id}">${icon('users', 16)} Bring your group onto this booking</button>
+      ${S.group && S.group.tplId === t.id ? `<div class="notice ok" style="margin-top:10px">Group started · ${S.group.members.filter(m => m.joined).length} joined. <strong data-act="openGroupPage">Open the group page</strong></div>` : ''}
     </div>
 
     <div class="card">
@@ -461,7 +501,7 @@ function inspiredChip(t) {
   const insp = S.inspired;
   if (!insp || insp.tplId !== t.id) return '';
   return `<div class="inspired">
-    <span class="inspired-thumb">${artSvg(t.art, 'chip')}</span>
+    <span class="inspired-thumb">${artFor(t, 'chip')}</span>
     <span class="inspired-body">
       <strong>Inspired by ${esc(insp.handle)}\u2019s reel</strong>
       <span>${esc(insp.place)} · opened from Instagram</span>
@@ -486,14 +526,14 @@ function priceBlock(t, p) {
     </div>
   </div>
   <div class="row" style="border-top:1px solid var(--color-divider);margin-top:10px">
-    <div><strong style="font-size:13.5px">Travellers</strong><div class="tiny">Total ${money(p.perPerson * S.travellers)}</div></div>
-    <div class="chiprow">
+    <div><strong style="font-size:13.5px">Travellers</strong><div class="tiny">Total ${money(p.perPerson * S.travellers)} · ${esc(p.occupancy.note)}</div></div>
+    <div class="chiprow stepper">
       <button class="chip small" data-act="pax" data-v="-">${icon('minus', 14)}</button>
       <span style="font-weight:800;min-width:18px;text-align:center">${S.travellers}</span>
       <button class="chip small" data-act="pax" data-v="+">${icon('plus', 14)}</button>
     </div>
   </div>
-  <div class="tiny" style="margin-top:6px">Plan is stored and reviewed. Price comes from inventory each time you change something.</div>`;
+`;
 }
 
 function tripFooter(t, p) {
@@ -534,7 +574,7 @@ function viewPreparing() {
   const notified = S.notifyList.includes(t.id);
   return `<div class="screen">
     <a class="backlink" data-act="go" data-v="home">${icon('arrowLeft', 16)} Back</a>
-    <div class="art">${artSvg(t.art, t.id)}<div class="art-top"><span class="badge prep">Preparing</span></div></div>
+    <div class="art">${artFor(t, t.id)}<div class="art-top"><span class="badge prep">Preparing</span></div></div>
     <div class="card" style="margin-top:12px">
       <h1>We are preparing this itinerary</h1>
       <p class="sub">Our scan picked up this reel from ${esc(c.handle)} at ${esc(t.detectedAt || 'today')}. An MMT expert is checking the plan before it goes live. This usually takes a few hours.</p>
@@ -671,7 +711,7 @@ function viewFinder() {
 function finderCard(r) {
   const { t, vm, sv, tierId, price, fits } = r;
   return `<div class="card" data-act="openTrip" data-v="${t.id}" style="padding:0;overflow:hidden">
-    <div class="art small" style="border-radius:0">${artSvg(t.art, t.id + 'f')}
+    <div class="art small" style="border-radius:0">${artFor(t, t.id + 'f')}
       <div class="art-top"><span class="badge ${sv.cls}">${sv.label}</span><span class="badge live">${vm.pct}% vibe match</span></div>
     </div>
     <div style="padding:12px">
@@ -771,13 +811,14 @@ function viewGroup() {
   if (!g) return viewHome();
   const t = tpl(g.tplId);
   const w = groupWinner(g, t);
-  const p = priceFor(t, w.tier.best, w.win.best, S.addOns, S.fetchSeq);
+  const joined0 = g.members.filter(m => m.joined).length;
+  const p = priceFor(t, w.tier.best, w.win.best, S.addOns, S.fetchSeq, joined0);
   const joined = g.members.filter(m => m.joined).length;
   const confirmed = g.members.filter(m => m.confirmed).length;
 
   return `<div class="screen">
     <a class="backlink" data-act="go" data-v="trip">${icon('arrowLeft', 16)} Back to trip</a>
-    <div class="art">${artSvg(t.art, t.id + 'g')}<span class="scrim"></span>
+    <div class="art">${artFor(t, t.id + 'g')}<span class="scrim"></span>
       <div class="art-top">${trustBadge(t)}</div>
       <div class="art-bottom"><div class="big">${esc(t.destination)}</div><div style="font-size:12.5px">Group trip · hosted by ${esc(g.host)}</div></div>
     </div>
@@ -851,7 +892,7 @@ function viewCheckout() {
   const groupMode = S.checkout.group && g;
   const people = groupMode ? g.members.filter(m => m.joined) : [{ name: 'You', paid: false }];
   const w = groupMode ? groupWinner(g, t) : null;
-  const p = priceFor(t, groupMode ? w.tier.best : S.tier, groupMode ? w.win.best : S.windowId, S.addOns, S.fetchSeq);
+  const p = priceFor(t, groupMode ? w.tier.best : S.tier, groupMode ? w.win.best : S.windowId, S.addOns, S.fetchSeq, groupMode ? people.length : S.travellers);
   const total = p.perPerson * (groupMode ? people.length : S.travellers);
   const paidCount = groupMode ? people.filter(m => m.paid).length : 0;
 
@@ -862,7 +903,7 @@ function viewCheckout() {
 
     <div class="card">
       <div style="display:flex;gap:10px">
-        <div style="flex:0 0 76px" class="art small" >${artSvg(t.art, t.id + 'c')}</div>
+        <div style="flex:0 0 76px" class="art small">${artFor(t, t.id + 'c')}</div>
         <div style="flex:1">
           <strong>${esc(t.destination)}</strong>
           <div class="tiny">${t.days + p.extraDays} days · ${esc(p.tierLabel)} · ${esc(p.windowLabel)}</div>
@@ -894,8 +935,8 @@ function viewCheckout() {
     <div class="card">
       <h2>Payment</h2>
       <div class="row"><div><strong>UPI</strong><div class="tiny">you@okbank · mock</div></div><span class="badge verified">Selected</span></div>
-      <div class="row"><div><strong>Pay in parts with friends</strong><div class="tiny">Share the trip and split by UPI</div></div>
-        <button class="chip small" data-act="shareSheet">Share</button></div>
+      <div class="row"><div><strong>Bring your group onto this booking</strong><div class="tiny">Everyone votes, then pays their own share by UPI</div></div>
+        <button class="chip small on" data-act="switchToGroup">Switch</button></div>
       <button class="btn cta" style="margin-top:12px" data-act="confirmBooking">Pay ${money(total)}</button>
     </div>`}
     ${footNote()}
@@ -1234,13 +1275,28 @@ document.addEventListener('click', (e) => {
     case 'toggleAddOn':
       S.addOns = S.addOns.includes(v) ? S.addOns.filter(x => x !== v) : S.addOns.concat(v);
       refetchPrice(); break;
-    case 'pax':
-      S.travellers = Math.max(1, Math.min(9, S.travellers + (v === '+' ? 1 : -1)));
-      render(); break;
+    case 'pax': {
+      const next = Math.max(1, Math.min(9, S.travellers + (v === '+' ? 1 : -1)));
+      if (next === S.travellers) break;
+      S.travellers = next;
+      refetchPrice(); break;
+    }
     case 'save':
       S.saved = S.saved.includes(v) ? S.saved.filter(x => x !== v) : S.saved.concat(v);
       toast(S.saved.includes(v) ? 'Saved to your trips' : 'Removed from saved'); break;
     case 'shareSheet': S.sheet = { kind: 'share' }; render(); break;
+    case 'startGroup':
+      if (!S.group || S.group.tplId !== S.tplId) S.group = newGroup(tpl(S.tplId));
+      S.sheet = { kind: 'share' };
+      render(); break;
+    case 'openGroupPage':
+      if (!S.group || S.group.tplId !== S.tplId) S.group = newGroup(tpl(S.tplId));
+      go('group'); break;
+    case 'switchToGroup':
+      if (!S.group || S.group.tplId !== S.tplId) S.group = newGroup(tpl(S.tplId));
+      S.checkout = { group: true };
+      toast('Group booking started');
+      go('group'); break;
     case 'closeSheet': if (!e.target.closest('[data-stop]')) { S.sheet = null; render(); } break;
     case 'sendInvite': toast('Invite sent (mock)'); break;
     case 'openGroup':
@@ -1260,7 +1316,8 @@ document.addEventListener('click', (e) => {
       const t = tpl(S.tplId);
       const groupMode = S.checkout.group && S.group;
       const w = groupMode ? groupWinner(S.group, t) : null;
-      const p = priceFor(t, groupMode ? w.tier.best : S.tier, groupMode ? w.win.best : S.windowId, S.addOns, S.fetchSeq);
+      const people0 = groupMode ? S.group.members.filter(m => m.joined).length : S.travellers;
+      const p = priceFor(t, groupMode ? w.tier.best : S.tier, groupMode ? w.win.best : S.windowId, S.addOns, S.fetchSeq, people0);
       const people = groupMode ? S.group.members.filter(m => m.joined).length : S.travellers;
       S.confirmation = { tplId: t.id, ref: 'MMT' + Math.floor(100000 + Math.random() * 899999), window: p.windowLabel, tier: p.tierLabel, people, total: p.perPerson * people };
       S.bookings.push({ tplId: t.id, at: nowStr(), total: S.confirmation.total });

@@ -48,7 +48,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 
 /* ---------- post ---------- */
 .ig-media{width:100%;aspect-ratio:4/5;display:block;background:#0A0A0A}
-.ig-media svg{display:block;width:100%;height:100%}
+.ig-media svg,.ig-media img{display:block;width:100%;height:100%;object-fit:cover}
 .ig-actions{display:flex;align-items:center;gap:18px;padding:12px 14px 6px}
 .ig-actions .ig-spacer{flex:1}
 .ig-actions button{display:flex;align-items:center;justify-content:center}

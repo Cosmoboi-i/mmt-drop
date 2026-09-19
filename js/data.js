@@ -7,7 +7,7 @@ const CREATORS = {
   naina:  { id: 'cr_04', handle: '@nainaonroute',   name: 'Naina Rao',     platform: 'YouTube',   isCircleMember: false, followers: '760K', tier: 'Watchlist' },
   dev:    { id: 'cr_05', handle: '@devdoestrails',  name: 'Dev Bhatia',    platform: 'Instagram', isCircleMember: false, followers: '340K', tier: 'Watchlist' },
   meera:  { id: 'cr_06', handle: '@meeraeats',      name: 'Meera Iyer',    platform: 'Instagram', isCircleMember: false, followers: '520K', tier: 'Watchlist' },
-  manshu: { id: 'cr_07', handle: '@manshuuuu',      name: 'Manshu',        platform: 'Instagram', isCircleMember: false, followers: '286K', tier: 'Watchlist' }
+  mohak:  { id: 'cr_07', handle: '@mohak',          name: 'Mohak',         platform: 'Instagram', isCircleMember: false, followers: '286K', tier: 'Watchlist' }
 };
 
 /* Illustration keys. The actual colours live in theme.css as
@@ -339,13 +339,18 @@ TEMPLATES.push({
   id: 'tpl_araku',
   source: 'watchlist',
   status: 'live',
-  creator: 'manshu',
+  creator: 'mohak',
   reelLink: 'instagram.com/p/DW8x2kQz1ab',
   postId: 'DW8x2kQz1ab',
   token: 'MMT-ARAKU-4D',
   destination: 'Araku Valley',
   state: 'Andhra Pradesh',
   art: 'araku',
+  photo: {
+    src: 'assets/borra-caves.jpg',
+    alt: 'Stalactite and stalagmite formations inside Borra Caves',
+    credit: 'Photo: Robert Griner, public domain via Wikimedia Commons'
+  },
   days: 4,
   summary: 'Limestone caves at Borra, a slow hill train through 58 tunnels and coffee country above the ghats.',
   vibeTags: ['Caves', 'Valleys', 'Slow travel'],
@@ -379,7 +384,7 @@ TEMPLATES.push({
    This is the same reel -> itinerary association the resolver uses,
    looked up by post id instead of by pasted link. */
 const POST_TEMPLATES = {
-  DW8x2kQz1ab: { tplId: 'tpl_araku', handle: '@manshuuuu', place: 'Tu Lan Caves System' }
+  DW8x2kQz1ab: { tplId: 'tpl_araku', handle: '@mohak', place: 'Borra Caves' }
 };
 
 /* Watchlist scan log — mock output of the scheduled job. */
@@ -388,7 +393,7 @@ const WATCHLIST_SCANS = [
   { creator: 'naina', lastScanTime: '19 Sep 2026, 11:10', newReelsFound: 0, templateStatus: 'live', note: 'No new uploads' },
   { creator: 'meera', lastScanTime: '19 Sep 2026, 09:40', newReelsFound: 1, templateStatus: 'preparing', note: 'Coorg reel in drafting' },
   { creator: 'dev',   lastScanTime: '19 Sep 2026, 08:15', newReelsFound: 1, templateStatus: 'live', note: 'Rishikesh reel mapped' },
-  { creator: 'manshu',lastScanTime: '19 Sep 2026, 07:50', newReelsFound: 1, templateStatus: 'live', note: 'Caves post mapped to Araku Valley' }
+  { creator: 'mohak', lastScanTime: '19 Sep 2026, 07:50', newReelsFound: 1, templateStatus: 'live', note: 'Borra Caves post mapped to Araku Valley' }
 ];
 
 /* Requests raised by viewers from the Scenario 3 screen. */
