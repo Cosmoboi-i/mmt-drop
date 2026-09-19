@@ -94,8 +94,21 @@ const ICON = {
   doc: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h10M4 11h8M4 16h6"/><path d="M18 5v14M16 5h4M16 19h4"/></svg>`,
   copy: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></svg>`,
   people: `<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="8" r="3.4"/><circle cx="16.5" cy="9" r="2.8"/><path d="M2.5 18c0-3.2 2.9-5 6.5-5s6.5 1.8 6.5 5z"/><path d="M16.5 13.4c2.9 0 5 1.5 5 4.6h-4.2c0-1.8-.5-3.3-1.4-4.5z"/></svg>`,
+  searchSm: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.6-3.6"/></svg>`,
+  personAdd: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.6"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M19 8v6M16 11h6"/></svg>`,
+  personPlaceholder: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#4A4A4E"/><circle cx="32" cy="25" r="11" fill="#8E8E93"/><path d="M10 60c0-12 10-18 22-18s22 6 22 18z" fill="#8E8E93"/></svg>`,
+  addStory: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 2.6"/><path d="M12 8.5v7M8.5 12h7"/></svg>`,
+  shareTo: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M16 7l-4-4-4 4"/><path d="M12 3v13"/></svg>`,
+  linkChain: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>`,
+  whatsappBig: `<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2zm5.2 13.9c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 1.9c.1.2 0 .4-.1.5l-.3.4c-.1.1-.3.3-.1.6.1.3.6 1.1 1.3 1.7.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.7-.1 1.2z"/></svg>`,
   whatsapp: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2zm5.2 13.9c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 1.9c.1.2 0 .4-.1.5l-.3.4c-.1.1-.3.3-.1.6.1.3.6 1.1 1.3 1.7.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.7-.1 1.2z"/></svg>`
 };
+
+const MMT_TILE = APP_TILES_MMT();
+function APP_TILES_MMT() {
+  return `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#E4262C"/>
+    <text x="32" y="43" font-family="Georgia,'Times New Roman',serif" font-size="30" font-style="italic" font-weight="700" fill="#fff" text-anchor="middle">my</text></svg>`;
+}
 
 const APP_TILES = {
   linkedin: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#0A66C2"/>
@@ -156,52 +169,42 @@ function postScreen() {
 }
 
 function shareSheet() {
-  const contacts = [
-    { label: 'Friiends', art: ART.friends },
-    { label: 'My Family', icon: ICON.people },
-    { label: 'BoysTrip', icon: ICON.people }
-  ];
-  const apps = [
-    { key: 'linkedin', label: 'LinkedIn' },
-    { key: 'mmt', label: 'MMT', act: 'toMMT' },
-    { key: 'outlook', label: 'Outlook' },
-    { key: 'instagram', label: 'Instagram' }
+  /* People are placeholders on purpose: no real faces in a demo build. */
+  const people = ['Ananya', 'Rohit', 'Zoya', 'Ishaan', 'Meera', 'Kabir'];
+  const actions = [
+    { key: 'mmt',     label: 'MMT',          act: 'toMMT' },
+    { key: 'story',   label: 'Add to story', icon: ICON.addStory },
+    { key: 'shareto', label: 'Share to...',  icon: ICON.shareTo },
+    { key: 'copy',    label: 'Copy link',    icon: ICON.linkChain, act: 'copy' },
+    { key: 'wa',      label: 'WhatsApp',     icon: ICON.whatsappBig }
   ];
   return `
   <div class="ig-backdrop" id="ig-backdrop" data-act="closeSheet">
     <div class="ig-sheet" data-stop="1">
-      <div class="ig-sheet-head">
-        <button class="ig-cancel" data-act="closeSheet">Cancel</button>
-        <span class="ig-sheet-title">Sharing text</span>
-        <span class="ig-ghost"></span>
+      <span class="ig-grab"></span>
+
+      <p class="ig-disclaimer">Links you share are unique to you and may be used to improve
+        suggestions and ads you see. <a href="#" data-act="noop">Learn more</a></p>
+
+      <div class="ig-searchrow">
+        <span class="ig-search">${ICON.searchSm}<input placeholder="Search" aria-label="Search"></span>
+        <button class="ig-newgroup" aria-label="New group">${ICON.personAdd}</button>
       </div>
 
-      <div class="ig-preview">
-        <span class="ig-doc">${ICON.doc}</span>
-        <span class="ig-ptext">
-          <s>${POST.captionStruck}</s> ${POST.caption}
-          <span class="ig-url">${POST.url}</span>
-        </span>
-        <button class="ig-copy" data-act="copy" aria-label="Copy">${ICON.copy}</button>
-      </div>
-
-      <div class="ig-row">
-        ${contacts.map(c => `
-          <span class="ig-target">
-            <span class="ig-badgewrap">
-              <span class="ig-circle">${c.art || c.icon}</span>
-              <span class="ig-wa">${ICON.whatsapp}</span>
-            </span>
-            <span class="ig-label">${c.label}</span>
+      <div class="ig-people">
+        ${people.map(n => `
+          <span class="ig-person">
+            <span class="ig-face">${ICON.personPlaceholder}</span>
+            <span class="ig-label">${n}</span>
           </span>`).join('')}
       </div>
 
-      <div class="ig-divider"></div>
-
-      <div class="ig-row">
-        ${apps.map(a => `
-          <span class="ig-target ig-app ${a.key === 'mmt' ? 'is-mmt' : ''}" ${a.act ? `data-act="${a.act}"` : ''}>
-            <span class="ig-tile">${APP_TILES[a.key]}</span>
+      <div class="ig-actionbar">
+        ${actions.map(a => `
+          <span class="ig-action ${a.key === 'mmt' ? 'is-mmt' : ''}" ${a.act ? `data-act="${a.act}"` : ''}>
+            <span class="ig-round ${a.key === 'mmt' ? 'brand-mmt' : a.key === 'wa' ? 'brand-wa' : ''}">
+              ${a.key === 'mmt' ? MMT_TILE : a.icon}
+            </span>
             <span class="ig-label">${a.label}</span>
           </span>`).join('')}
       </div>
@@ -230,7 +233,11 @@ document.addEventListener('click', (e) => {
     }
   }
 
-  if (act === 'copy') { el.style.opacity = '.4'; setTimeout(() => { el.style.opacity = '1'; }, 220); }
+  if (act === 'copy') {
+    el.classList.add('tapped');
+    setTimeout(() => el.classList.remove('tapped'), 260);
+  }
+  if (act === 'noop') e.preventDefault();
 
   /* Hand the post id to the MMT app route. No network call, no auth. */
   if (act === 'toMMT') {
