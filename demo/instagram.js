@@ -100,39 +100,7 @@ const ICON = {
   addStory: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 2.6"/><path d="M12 8.5v7M8.5 12h7"/></svg>`,
   shareTo: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M16 7l-4-4-4 4"/><path d="M12 3v13"/></svg>`,
   linkChain: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>`,
-  whatsappBig: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="32" cy="32" r="32" fill="#12A22B"/>
-    <path d="M21.5 44.8 L10.5 55 L24.2 50.6 Z" fill="#fff"/>
-    <circle cx="33" cy="31" r="17.5" fill="none" stroke="#fff" stroke-width="4.6"/>
-    <path fill="#fff" d="M41.6 36.6c-.5-.3-2.9-1.5-3.4-1.6-.5-.2-.8-.3-1.1.3-.3.5-1.3 1.6-1.6 1.9-.3.3-.6.4-1.1.1-.5-.3-2.1-.8-3.9-2.4-1.4-1.3-2.4-2.9-2.7-3.4-.3-.5 0-.8.2-1.1.2-.2.5-.6.8-.9.2-.3.3-.5.5-.9.2-.3.1-.6 0-.9-.1-.3-1.1-2.7-1.6-3.7-.4-1-.8-.8-1.1-.9h-1c-.3 0-.9.1-1.3.6-.5.5-1.7 1.7-1.7 4.2s1.8 4.9 2.1 5.2c.2.3 3.5 5.5 8.6 7.7 3 1.3 4.2 1.4 5.7 1.1 1-.1 2.9-1.2 3.3-2.3.4-1.2.4-2.1.3-2.3-.1-.3-.4-.4-.9-.7z"/>
-  </svg>`,
   whatsapp: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2zm5.2 13.9c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 1.9c.1.2 0 .4-.1.5l-.3.4c-.1.1-.3.3-.1.6.1.3.6 1.1 1.3 1.7.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.7-.1 1.2z"/></svg>`
-};
-
-const MMT_TILE = APP_TILES_MMT();
-function APP_TILES_MMT() {
-  return `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#E4262C"/>
-    <text x="32" y="43" font-family="Georgia,'Times New Roman',serif" font-size="30" font-style="italic" font-weight="700" fill="#fff" text-anchor="middle">my</text></svg>`;
-}
-
-const APP_TILES = {
-  linkedin: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#0A66C2"/>
-    <circle cx="19" cy="19" r="5" fill="#fff"/><rect x="14" y="27" width="10" height="23" fill="#fff"/>
-    <path d="M30 27h10v3c2-3 5-4 8-4 7 0 10 4 10 12v12H48V39c0-4-1-6-4-6s-4 2-4 6v11H30z" fill="#fff"/></svg>`,
-  mmt: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#E4262C"/>
-    <text x="32" y="43" font-family="Georgia,'Times New Roman',serif" font-size="30" font-style="italic" font-weight="700" fill="#fff" text-anchor="middle">my</text></svg>`,
-  outlook: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#fff"/>
-    <path d="M34 18l22 8-22 8z" fill="#28A8EA"/><path d="M34 30l22 8-22 8z" fill="#0078D4"/>
-    <path d="M12 22h20v20H12z" fill="#0364B8"/><path d="M8 24l22-6v28L8 40z" fill="#14447D"/>
-    <circle cx="19" cy="32" r="6" fill="#fff"/></svg>`,
-  instagram: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0">
-      <stop offset="0%" stop-color="#FDCB5C"/><stop offset="35%" stop-color="#E95950"/>
-      <stop offset="70%" stop-color="#D62976"/><stop offset="100%" stop-color="#8134AF"/></linearGradient></defs>
-    <rect width="64" height="64" fill="url(#ig)"/>
-    <rect x="15" y="15" width="34" height="34" rx="10" fill="none" stroke="#fff" stroke-width="3.4"/>
-    <circle cx="32" cy="32" r="8.5" fill="none" stroke="#fff" stroke-width="3.4"/>
-    <circle cx="42.5" cy="21.5" r="2.4" fill="#fff"/></svg>`
 };
 
 /* ---------- render ---------- */
@@ -177,11 +145,11 @@ function shareSheet() {
   /* People are placeholders on purpose: no real faces in a demo build. */
   const people = ['Ananya', 'Rohit', 'Zoya', 'Ishaan', 'Meera', 'Kabir'];
   const actions = [
-    { key: 'mmt',     label: 'MMT',          act: 'toMMT' },
+    { key: 'mmt',     label: 'MMT',          act: 'toMMT', img: '../assets/MMT-logo-new.png' },
     { key: 'story',   label: 'Add to story', icon: ICON.addStory },
     { key: 'shareto', label: 'Share to...',  icon: ICON.shareTo },
     { key: 'copy',    label: 'Copy link',    icon: ICON.linkChain, act: 'copy' },
-    { key: 'wa',      label: 'WhatsApp',     icon: ICON.whatsappBig }
+    { key: 'wa',      label: 'WhatsApp',     img: '../assets/WA-logo-new.png' }
   ];
   return `
   <div class="ig-backdrop" id="ig-backdrop" data-act="closeSheet">
@@ -207,8 +175,8 @@ function shareSheet() {
       <div class="ig-actionbar">
         ${actions.map(a => `
           <span class="ig-action ${a.key === 'mmt' ? 'is-mmt' : ''}" ${a.act ? `data-act="${a.act}"` : ''}>
-            <span class="ig-round ${a.key === 'mmt' ? 'brand-mmt' : a.key === 'wa' ? 'brand-wa' : ''}">
-              ${a.key === 'mmt' ? MMT_TILE : a.icon}
+            <span class="ig-round ${a.img ? 'is-logo' : ''}">
+              ${a.img ? `<img src="${a.img}" alt="${a.label}">` : a.icon}
             </span>
             <span class="ig-label">${a.label}</span>
           </span>`).join('')}
