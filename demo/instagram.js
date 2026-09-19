@@ -175,7 +175,7 @@ function shareSheet() {
       <div class="ig-actionbar">
         ${actions.map(a => `
           <span class="ig-action ${a.key === 'mmt' ? 'is-mmt' : ''}" ${a.act ? `data-act="${a.act}"` : ''}>
-            <span class="ig-round ${a.img ? 'is-logo' : ''}">
+            <span class="ig-round ${a.img ? 'is-logo logo-' + a.key : ''}">
               ${a.img ? `<img src="${a.img}" alt="${a.label}">` : a.icon}
             </span>
             <span class="ig-label">${a.label}</span>

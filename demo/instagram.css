@@ -136,6 +136,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .ig-round svg{display:block}
 .ig-round.is-logo{background:transparent}
 .ig-round img{display:block;width:100%;height:100%;object-fit:contain}
+/* the WhatsApp artwork carries a little transparent padding: crop it so the
+   green circle meets the edge and no light rim shows */
+.ig-round.logo-wa img{transform:scale(1.08)}
 .ig-action.tapped .ig-round{transform:scale(.9)}
 .ig-action.is-mmt .ig-round{animation:ig-nudge 2.6s ease-in-out infinite}
 @keyframes ig-nudge{0%,72%,100%{transform:none}80%{transform:scale(1.07)}88%{transform:scale(.99)}}
