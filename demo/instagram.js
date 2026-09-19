@@ -100,7 +100,12 @@ const ICON = {
   addStory: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" stroke-dasharray="3 2.6"/><path d="M12 8.5v7M8.5 12h7"/></svg>`,
   shareTo: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/><path d="M16 7l-4-4-4 4"/><path d="M12 3v13"/></svg>`,
   linkChain: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>`,
-  whatsappBig: `<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2zm5.2 13.9c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 1.9c.1.2 0 .4-.1.5l-.3.4c-.1.1-.3.3-.1.6.1.3.6 1.1 1.3 1.7.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.7-.1 1.2z"/></svg>`,
+  whatsappBig: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="32" cy="32" r="32" fill="#12A22B"/>
+    <path d="M21.5 44.8 L10.5 55 L24.2 50.6 Z" fill="#fff"/>
+    <circle cx="33" cy="31" r="17.5" fill="none" stroke="#fff" stroke-width="4.6"/>
+    <path fill="#fff" d="M41.6 36.6c-.5-.3-2.9-1.5-3.4-1.6-.5-.2-.8-.3-1.1.3-.3.5-1.3 1.6-1.6 1.9-.3.3-.6.4-1.1.1-.5-.3-2.1-.8-3.9-2.4-1.4-1.3-2.4-2.9-2.7-3.4-.3-.5 0-.8.2-1.1.2-.2.5-.6.8-.9.2-.3.3-.5.5-.9.2-.3.1-.6 0-.9-.1-.3-1.1-2.7-1.6-3.7-.4-1-.8-.8-1.1-.9h-1c-.3 0-.9.1-1.3.6-.5.5-1.7 1.7-1.7 4.2s1.8 4.9 2.1 5.2c.2.3 3.5 5.5 8.6 7.7 3 1.3 4.2 1.4 5.7 1.1 1-.1 2.9-1.2 3.3-2.3.4-1.2.4-2.1.3-2.3-.1-.3-.4-.4-.9-.7z"/>
+  </svg>`,
   whatsapp: `<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.6 4.8-1.3A10 10 0 1 0 12 2zm5.2 13.9c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.9-2.1c.2-.2.5-.3.6-.3h.5c.2 0 .4 0 .6.4l.8 1.9c.1.2 0 .4-.1.5l-.3.4c-.1.1-.3.3-.1.6.1.3.6 1.1 1.3 1.7.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.6-.1l1.8.9c.2.1.4.2.4.3.1.2.1.7-.1 1.2z"/></svg>`
 };
 
