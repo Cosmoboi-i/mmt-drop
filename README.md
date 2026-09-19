@@ -51,6 +51,20 @@ Mocked: AI drafting, the platform scanning job, payments, sharing, and all numbe
 - `js/icons.js` — Lucide-style outline icons, stroked with `currentColor`
 - `js/data.js` — data model and seed data (8 templates: 3 Circle, 5 watchlist, one of them still preparing)
 - `js/app.js` — state, pricing, resolver, all screens
+- `demo/` — dummy Instagram post and iOS-style share sheet, fully self-contained
+  (`demo/index.html`, `demo/instagram.css`, `demo/instagram.js`); it has its own dark
+  tokens and shares nothing with the MMT theme
+
+## Share-to-MMT entry flow
+
+`demo/index.html` is a dummy Instagram post by @manshuuuu. The paper-plane icon opens an
+iOS-style share sheet; tapping the MMT tile hands the post id to the MMT app route
+(`index.html?post=<id>`). MMT opens with a fade and scale, shows a "Finding your dream
+vacation…" loader for two seconds, then renders the stored itinerary for that post with an
+"Inspired by @manshuuuu's reel" chip at the top. The post id resolves through the same
+reel → itinerary association the link resolver uses, so pasting the post URL into the MMT
+home screen lands on the same plan. Reach it from the MMT home screen via "See it from the
+reel side", or open `demo/index.html` directly.
 
 ## Design system
 

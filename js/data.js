@@ -6,12 +6,13 @@ const CREATORS = {
   kabir:  { id: 'cr_03', handle: '@wanderwithkabir',name: 'Kabir Sen',     platform: 'Instagram', isCircleMember: false, followers: '1.1M', tier: 'Watchlist' },
   naina:  { id: 'cr_04', handle: '@nainaonroute',   name: 'Naina Rao',     platform: 'YouTube',   isCircleMember: false, followers: '760K', tier: 'Watchlist' },
   dev:    { id: 'cr_05', handle: '@devdoestrails',  name: 'Dev Bhatia',    platform: 'Instagram', isCircleMember: false, followers: '340K', tier: 'Watchlist' },
-  meera:  { id: 'cr_06', handle: '@meeraeats',      name: 'Meera Iyer',    platform: 'Instagram', isCircleMember: false, followers: '520K', tier: 'Watchlist' }
+  meera:  { id: 'cr_06', handle: '@meeraeats',      name: 'Meera Iyer',    platform: 'Instagram', isCircleMember: false, followers: '520K', tier: 'Watchlist' },
+  manshu: { id: 'cr_07', handle: '@manshuuuu',      name: 'Manshu',        platform: 'Instagram', isCircleMember: false, followers: '286K', tier: 'Watchlist' }
 };
 
 /* Illustration keys. The actual colours live in theme.css as
    --illus-<key>-1..3 and are referenced by the inline SVG. */
-const ART_KEYS = ['spiti','gokarna','meghalaya','jaisalmer','coorg','rishikesh','andaman','kasol'];
+const ART_KEYS = ['spiti','gokarna','meghalaya','jaisalmer','coorg','rishikesh','andaman','kasol','araku'];
 
 /* Budget tier multipliers apply to a per-person-per-day base. Illustrative only. */
 const TIERS = {
@@ -332,12 +333,62 @@ const TEMPLATES = [
   }
 ];
 
+/* Reached from the Instagram share sheet: the post id in the caption link
+   resolves to this stored template. */
+TEMPLATES.push({
+  id: 'tpl_araku',
+  source: 'watchlist',
+  status: 'live',
+  creator: 'manshu',
+  reelLink: 'instagram.com/p/DW8x2kQz1ab',
+  postId: 'DW8x2kQz1ab',
+  token: 'MMT-ARAKU-4D',
+  destination: 'Araku Valley',
+  state: 'Andhra Pradesh',
+  art: 'araku',
+  days: 4,
+  summary: 'Limestone caves at Borra, a slow hill train through 58 tunnels and coffee country above the ghats.',
+  vibeTags: ['Caves', 'Valleys', 'Slow travel'],
+  activities: ['Caving', 'Trekking', 'Waterfalls', 'Coffee estates'],
+  bestSeason: 'Oct – Feb',
+  baseDay: 2800,
+  reviewedBy: 'MMT South desk',
+  reviewedOn: '18 Sep 2026',
+  stays: { value: 'Valley homestay', comfort: 'Hill resort cottage', luxury: 'Boutique estate villa' },
+  transport: { value: 'Hill train + shared jeep', comfort: 'Hill train + private cab', luxury: 'Private SUV + guide' },
+  dayPlan: [
+    { d: 1, title: 'Visakhapatnam to Araku by train', text: 'The Kirandul passenger through 58 tunnels and 84 bridges, valley views most of the way.' },
+    { d: 2, title: 'Borra Caves', text: 'Million-year-old limestone chambers, Katiki waterfall in the afternoon, tribal museum on the way back.' },
+    { d: 3, title: 'Coffee country', text: 'Estate walk above the ghats, Padmapuram gardens, sunset at Galikonda viewpoint.' },
+    { d: 4, title: 'Ghat road descent', text: 'Drive down the Ananthagiri ghats with coffee stops, drop at Vizag airport or station.' }
+  ],
+  dateWindows: [
+    { id: 'w1', label: 'Late Oct 2026', reason: 'Post-monsoon green, softer rates', delta: -8 },
+    { id: 'w2', label: 'Late Dec 2026', reason: 'Peak holiday week', delta: 19 },
+    { id: 'w3', label: 'Mid Feb 2027', reason: 'Cool mornings, clear caves', delta: -5 }
+  ],
+  addOns: [
+    { id: 'a1', label: 'Vizag beaches and submarine museum', days: 1, price: 2600 },
+    { id: 'a2', label: 'Lambasingi overnight', days: 1, price: 3900 },
+    { id: 'a3', label: 'Tribal cuisine dinner', days: 0, price: 900 }
+  ],
+  stats: { views: 96800, clicks: 8400, bookings: 96 }
+});
+
+/* Post id -> stored template, plus what the share card should credit.
+   This is the same reel -> itinerary association the resolver uses,
+   looked up by post id instead of by pasted link. */
+const POST_TEMPLATES = {
+  DW8x2kQz1ab: { tplId: 'tpl_araku', handle: '@manshuuuu', place: 'Tu Lan Caves System' }
+};
+
 /* Watchlist scan log — mock output of the scheduled job. */
 const WATCHLIST_SCANS = [
   { creator: 'kabir', lastScanTime: '19 Sep 2026, 11:10', newReelsFound: 2, templateStatus: 'live', note: '1 mapped, 1 not travel' },
   { creator: 'naina', lastScanTime: '19 Sep 2026, 11:10', newReelsFound: 0, templateStatus: 'live', note: 'No new uploads' },
   { creator: 'meera', lastScanTime: '19 Sep 2026, 09:40', newReelsFound: 1, templateStatus: 'preparing', note: 'Coorg reel in drafting' },
-  { creator: 'dev',   lastScanTime: '19 Sep 2026, 08:15', newReelsFound: 1, templateStatus: 'live', note: 'Rishikesh reel mapped' }
+  { creator: 'dev',   lastScanTime: '19 Sep 2026, 08:15', newReelsFound: 1, templateStatus: 'live', note: 'Rishikesh reel mapped' },
+  { creator: 'manshu',lastScanTime: '19 Sep 2026, 07:50', newReelsFound: 1, templateStatus: 'live', note: 'Caves post mapped to Araku Valley' }
 ];
 
 /* Requests raised by viewers from the Scenario 3 screen. */
@@ -363,5 +414,6 @@ const SEASON_FIT = {
   tpl_coorg:     [8,9,10,11,0,1],
   tpl_rishikesh: [1,2,3,8,9,10],
   tpl_andaman:   [0,1,2,3,10,11],
-  tpl_kasol:     [2,3,4,5,8,9,10]
+  tpl_kasol:     [2,3,4,5,8,9,10],
+  tpl_araku:     [9,10,11,0,1]
 };

@@ -1,0 +1,139 @@
+/* Dummy Instagram screens — self-contained.
+   Deliberately separate from the MMT design system: its own dark tokens,
+   its own type, nothing shared with ../theme.css or ../styles.css. */
+:root{
+  --ig-bg:#000000;
+  --ig-surface:#1C1C1E;
+  --ig-sheet:#2C2C2E;
+  --ig-field:#3A3A3C;
+  --ig-text:#FFFFFF;
+  --ig-text-dim:#A8A8A8;
+  --ig-text-faint:#7C7C80;
+  --ig-line:#262626;
+  --ig-sheet-line:#48484A;
+  --ig-blue:#0A84FF;
+  --ig-whatsapp:#25D366;
+  --ig-radius-sheet:16px;
+  --ig-width:390px;
+  --ig-font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:#0B0B0C}
+body{font-family:var(--ig-font);color:var(--ig-text)}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+
+.ig-phone{
+  max-width:var(--ig-width);margin:0 auto;min-height:100vh;background:var(--ig-bg);
+  position:relative;overflow:hidden;
+}
+.ig-phone.leaving{animation:ig-handoff .34s ease forwards}
+@keyframes ig-handoff{to{opacity:0;transform:scale(.97)}}
+
+/* ---------- header ---------- */
+.ig-topbar{display:flex;align-items:center;gap:18px;padding:14px 16px 10px}
+.ig-topbar .ig-title{font-size:20px;font-weight:700;letter-spacing:.2px}
+
+.ig-userrow{display:flex;align-items:center;gap:10px;padding:6px 14px 12px}
+.ig-avatar{
+  width:36px;height:36px;border-radius:50%;flex:0 0 36px;overflow:hidden;
+  border:1.5px solid var(--ig-line);
+}
+.ig-avatar svg{display:block;width:100%;height:100%}
+.ig-userrow .ig-who{flex:1;min-width:0;line-height:1.25}
+.ig-userrow .ig-name{font-size:14px;font-weight:700}
+.ig-userrow .ig-place{font-size:12.5px;color:var(--ig-text-dim)}
+.ig-menu{display:flex;flex-direction:column;gap:3px;padding:8px}
+.ig-menu i{display:block;width:18px;height:2px;border-radius:2px;background:var(--ig-text)}
+.ig-menu i:last-child{width:13px}
+
+/* ---------- post ---------- */
+.ig-media{width:100%;aspect-ratio:4/5;display:block;background:#0A0A0A}
+.ig-media svg{display:block;width:100%;height:100%}
+.ig-actions{display:flex;align-items:center;gap:18px;padding:12px 14px 6px}
+.ig-actions .ig-spacer{flex:1}
+.ig-actions button{display:flex;align-items:center;justify-content:center}
+.ig-share-btn{position:relative}
+.ig-share-btn::after{
+  content:"";position:absolute;inset:-10px;border-radius:50%;
+  animation:ig-hint 2.4s ease-in-out infinite;border:1.5px solid var(--ig-blue);opacity:0;
+}
+@keyframes ig-hint{0%,70%,100%{opacity:0;transform:scale(.7)}35%{opacity:.55;transform:scale(1)}}
+.ig-likes{padding:2px 14px;font-size:13.5px;font-weight:700}
+.ig-caption{padding:4px 14px 2px;font-size:13.5px;line-height:1.4}
+.ig-caption b{font-weight:700;margin-right:6px}
+.ig-caption s{color:var(--ig-text-dim)}
+.ig-meta{padding:4px 14px 20px;font-size:11.5px;color:var(--ig-text-faint);text-transform:uppercase;letter-spacing:.3px}
+
+/* ---------- share sheet ---------- */
+.ig-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20;
+  display:flex;align-items:flex-end;justify-content:center;animation:ig-fade .2s ease;
+}
+@keyframes ig-fade{from{opacity:0}to{opacity:1}}
+.ig-backdrop.closing{animation:ig-fade .2s ease reverse forwards}
+.ig-sheet{
+  width:100%;max-width:var(--ig-width);background:var(--ig-sheet);
+  border-radius:var(--ig-radius-sheet) var(--ig-radius-sheet) 0 0;
+  padding:14px 16px calc(24px + env(safe-area-inset-bottom));
+  animation:ig-up .3s cubic-bezier(.32,.72,0,1);
+}
+.ig-backdrop.closing .ig-sheet{animation:ig-down .24s ease forwards}
+@keyframes ig-up{from{transform:translateY(100%)}to{transform:none}}
+@keyframes ig-down{to{transform:translateY(100%)}}
+
+.ig-sheet-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.ig-cancel{color:var(--ig-blue);font-size:17px}
+.ig-sheet-title{font-size:17px;font-weight:600;position:absolute;left:0;right:0;text-align:center;pointer-events:none}
+.ig-sheet-head{position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ig-sheet-head .ig-ghost{width:44px}
+
+/* preview pill */
+.ig-preview{
+  display:flex;align-items:center;gap:12px;background:var(--ig-field);
+  border-radius:12px;padding:12px;margin-bottom:22px;
+}
+.ig-preview .ig-doc{
+  width:46px;height:46px;border-radius:8px;flex:0 0 46px;background:#D9D9DE;
+  display:flex;align-items:center;justify-content:center;color:#3A3A3C;
+}
+.ig-preview .ig-ptext{flex:1;min-width:0;font-size:14px;line-height:1.35}
+.ig-preview .ig-ptext s{color:var(--ig-text-dim)}
+.ig-preview .ig-url{
+  color:var(--ig-text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;
+}
+.ig-copy{color:var(--ig-blue);flex:0 0 auto;padding:4px}
+
+/* rows of targets */
+.ig-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.ig-row::-webkit-scrollbar{display:none}
+.ig-target{
+  flex:0 0 84px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+}
+.ig-target .ig-badgewrap{position:relative;width:64px;height:64px}
+.ig-target .ig-circle{
+  width:64px;height:64px;border-radius:50%;overflow:hidden;display:flex;align-items:center;
+  justify-content:center;background:#0B4EA2;color:#fff;
+}
+.ig-target .ig-circle svg{display:block;width:100%;height:100%}
+.ig-target .ig-wa{
+  position:absolute;right:-1px;bottom:-1px;width:22px;height:22px;border-radius:50%;
+  background:var(--ig-whatsapp);border:2px solid var(--ig-sheet);
+  display:flex;align-items:center;justify-content:center;color:#fff;
+}
+.ig-target .ig-label{font-size:12px;color:var(--ig-text);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ig-divider{height:1px;background:var(--ig-sheet-line);margin:20px 0}
+
+.ig-app{flex:0 0 76px}
+.ig-app .ig-tile{
+  width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.ig-app .ig-tile svg{display:block;width:100%;height:100%}
+.ig-app.is-mmt .ig-tile{box-shadow:0 0 0 0 rgba(255,255,255,.5);animation:ig-nudge 2.6s ease-in-out infinite}
+@keyframes ig-nudge{0%,72%,100%{transform:none}80%{transform:scale(1.07)}88%{transform:scale(.99)}}
+
+/* handoff flash */
+.ig-handoff{
+  position:fixed;inset:0;background:#fff;z-index:40;opacity:0;pointer-events:none;
+}
+.ig-handoff.on{animation:ig-flash .34s ease forwards}
+@keyframes ig-flash{to{opacity:1}}

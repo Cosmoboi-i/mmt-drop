@@ -28,6 +28,7 @@ const S = {
   draftForm: null,
   group: null,
   checkout: { step: 'review', split: true },
+  inspired: null,   /* {postId, handle, place, tplId} when opened from a share */
   confirmation: null
 };
 
@@ -202,6 +203,40 @@ function toast(msg) {
   toast._t = setTimeout(() => { S.toast = null; render(); }, 2200);
 }
 
+/* ============================ share hand-off: loader ============================ */
+function viewLoading() {
+  const insp = S.inspired;
+  return `<div class="loader">
+    <div class="loader-orb">
+      <span class="loader-ring"></span>
+      <span class="loader-plane">${icon('plane', 30)}</span>
+    </div>
+    <div class="loader-title">Finding your dream vacation…</div>
+    <div class="loader-sub">${insp ? 'Matching ' + esc(insp.handle) + '\u2019s post to a reviewed MMT plan' : 'Matching this post to a reviewed MMT plan'}</div>
+    <div class="loader-bars">
+      <span class="sk line" style="width:72%"></span>
+      <span class="sk line" style="width:54%"></span>
+      <span class="sk line" style="width:63%"></span>
+    </div>
+    <div class="loader-note tiny">The plan is already built and checked. Only the price is fetched live.</div>
+  </div>`;
+}
+
+/* Opened from the Instagram share sheet: ?post=<id>. The post id is looked up
+   in the same reel -> itinerary association the link resolver uses. */
+function bootFromShare() {
+  const q = new URLSearchParams(window.location.search);
+  const postId = q.get('post');
+  if (!postId) return false;
+  const match = POST_TEMPLATES[postId];
+  if (!match) return false;
+  S.inspired = { postId, handle: match.handle, place: match.place, tplId: match.tplId };
+  S.screen = 'loading';
+  document.body.classList.add('handoff-in');
+  setTimeout(() => { openTrip(match.tplId); }, 2000);
+  return true;
+}
+
 /* ============================ viewer: home ============================ */
 function viewHome() {
   const r = S.resolver;
@@ -241,6 +276,15 @@ function viewHome() {
       </div>
       ${resolverPanel()}
     </div>
+
+    <a class="promo alt" href="demo/index.html">
+      <span class="promo-art">${icon('video', 24)}</span>
+      <span class="promo-body">
+        <strong>See it from the reel side</strong>
+        <span>Open a sample Instagram post and share it to MMT.</span>
+      </span>
+      <span class="promo-go">${icon('chevronRight', 20)}</span>
+    </a>
 
     <div class="section-title"><h2>Trips from reels this week</h2><span class="tiny">illustrative</span></div>
     ${live.map(t => tripRow(t)).join('')}
@@ -326,6 +370,7 @@ function viewTrip() {
   return `
   <div class="screen">
     <a class="backlink" data-act="go" data-v="home">${icon('arrowLeft', 16)} Back</a>
+    ${inspiredChip(t)}
     <div class="art tall">${artSvg(t.art, t.id)}<span class="scrim"></span>
       <div class="art-top">${trustBadge(t)}</div>
       <div class="art-bottom">
@@ -411,6 +456,19 @@ function viewTrip() {
     ${footNote()}
   </div>
   ${tripFooter(t, p)}`;
+}
+
+function inspiredChip(t) {
+  const insp = S.inspired;
+  if (!insp || insp.tplId !== t.id) return '';
+  return `<div class="inspired">
+    <span class="inspired-thumb">${artSvg(t.art, 'chip')}</span>
+    <span class="inspired-body">
+      <strong>Inspired by ${esc(insp.handle)}\u2019s reel</strong>
+      <span>${esc(insp.place)} · opened from Instagram</span>
+    </span>
+    <span class="inspired-mark">${icon('video', 16)}</span>
+  </div>`;
 }
 
 function priceBlock(t, p) {
@@ -1128,6 +1186,7 @@ function currentScreen() {
   if (S.role === 'creator') return viewCreator();
   if (S.role === 'ops') return viewOps();
   switch (S.screen) {
+    case 'loading': return viewLoading();
     case 'trip': return viewTrip();
     case 'preparing': return viewPreparing();
     case 'unknown': return viewUnknown();
@@ -1280,4 +1339,5 @@ document.addEventListener('input', (e) => {
   }
 });
 
+bootFromShare();
 render();
