@@ -9,17 +9,9 @@ const CREATORS = {
   meera:  { id: 'cr_06', handle: '@meeraeats',      name: 'Meera Iyer',    platform: 'Instagram', isCircleMember: false, followers: '520K', tier: 'Watchlist' }
 };
 
-/* Gradient art per destination — no remote images anywhere. */
-const ART = {
-  spiti:     ['#1b2a4a', '#3f6fb5', '#9ec9e8'],
-  gokarna:   ['#0e4f56', '#1fa39a', '#ffd9a0'],
-  meghalaya: ['#10361f', '#2e8b57', '#a8e6a3'],
-  jaisalmer: ['#4a2c10', '#c9832b', '#ffd98e'],
-  coorg:     ['#173a2b', '#3d7a4e', '#d4e8a8'],
-  rishikesh: ['#123a52', '#2f8fae', '#cfeee2'],
-  andaman:   ['#0b3d5c', '#1c9ec4', '#bff0e6'],
-  kasol:     ['#2a2f4a', '#5b6bb5', '#c9d4f0']
-};
+/* Illustration keys. The actual colours live in theme.css as
+   --illus-<key>-1..3 and are referenced by the inline SVG. */
+const ART_KEYS = ['spiti','gokarna','meghalaya','jaisalmer','coorg','rishikesh','andaman','kasol'];
 
 /* Budget tier multipliers apply to a per-person-per-day base. Illustrative only. */
 const TIERS = {

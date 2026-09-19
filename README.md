@@ -45,10 +45,18 @@ Mocked: AI drafting, the platform scanning job, payments, sharing, and all numbe
 
 ## Files
 
-- `index.html` — shell
-- `styles.css` — MMT-adjacent navy / teal / coral system, mobile-first
+- `index.html` — shell (Lato from Google Fonts)
+- `theme.css` — every design token: colour, type, radius, spacing, elevation, illustration palettes
+- `styles.css` — components, built only from tokens; no hardcoded colours
+- `js/icons.js` — Lucide-style outline icons, stroked with `currentColor`
 - `js/data.js` — data model and seed data (8 templates: 3 Circle, 5 watchlist, one of them still preparing)
 - `js/app.js` — state, pricing, resolver, all screens
+
+## Design system
+
+MakeMyTrip-adjacent: Lato, `#008CFF` as the only strong accent, gradient CTAs, white surfaces on light
+grey, 16px cards, 8px controls, hairline borders and near-flat elevation. Restyling means editing
+`theme.css` alone — components and the destination illustrations both read their colours from it.
 
 Data model: `Creator`, `TripTemplate` (source, reelLink, destination, vibeTags, activities, dayPlan,
 budgetTiers, recommendedDateWindows, nearbyAddOns, status), `WatchlistScan`, `GroupTrip`, `BookingMock`.

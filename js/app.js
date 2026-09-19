@@ -80,27 +80,31 @@ function refetchPrice() {
 
 /* ============================ art ============================ */
 function artSvg(key, seedText) {
-  const c = ART[key] || ART.spiti;
-  const id = 'g' + key + (seedText || '').length;
+  const k = ART_KEYS.includes(key) ? key : ART_KEYS[0];
+  const id = 'sky_' + k + String(seedText || '').length;
   return `<svg viewBox="0 0 400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="${id}" x1="0" y1="0" x2="0.6" y2="1">
-        <stop offset="0%" stop-color="${c[0]}"/><stop offset="60%" stop-color="${c[1]}"/><stop offset="100%" stop-color="${c[2]}"/>
+      <linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="var(--illus-${k}-3)"/>
+        <stop offset="100%" stop-color="var(--illus-${k}-2)"/>
       </linearGradient>
     </defs>
     <rect width="400" height="200" fill="url(#${id})"/>
-    <circle cx="322" cy="46" r="24" fill="#fff" opacity=".28"/>
-    <path d="M0 152 L72 96 L124 140 L186 82 L252 146 L316 108 L400 158 L400 200 L0 200 Z" fill="${c[0]}" opacity=".55"/>
-    <path d="M0 176 L84 132 L150 170 L226 128 L300 172 L400 138 L400 200 L0 200 Z" fill="${c[0]}" opacity=".85"/>
-    <g opacity=".35" fill="#fff">
-      <circle cx="46" cy="38" r="2.5"/><circle cx="96" cy="26" r="1.8"/><circle cx="148" cy="44" r="2"/>
-      <circle cx="242" cy="30" r="2.2"/><circle cx="286" cy="58" r="1.6"/>
-    </g>
+    <circle cx="318" cy="48" r="22" fill="var(--illus-paper)" opacity=".85"/>
+    <path d="M0 150 L70 104 L118 138 L178 92 L242 142 L308 112 L400 152 L400 200 L0 200 Z"
+      fill="var(--illus-grey)" opacity=".9"/>
+    <path d="M0 176 L86 126 L140 164 L214 122 L286 168 L400 132 L400 200 L0 200 Z"
+      fill="var(--illus-${k}-1)"/>
+    <path d="M214 122 L236 136 L224 140 L208 132 Z" fill="var(--illus-paper)" opacity=".9"/>
+    <path d="M86 126 L106 139 L94 143 L78 135 Z" fill="var(--illus-paper)" opacity=".9"/>
+    <path d="M0 176 L86 126 L140 164 L214 122 L286 168 L400 132"
+      fill="none" stroke="var(--illus-ink)" stroke-width="2" stroke-linejoin="round"
+      vector-effect="non-scaling-stroke" opacity=".35"/>
   </svg>`;
 }
 
 function trustBadge(t) {
-  if (t.source === 'circle') return `<span class="badge verified">✓ Creator verified</span>`;
+  if (t.source === 'circle') return `<span class="badge verified">${icon('check', 13)} Creator verified</span>`;
   return `<span class="badge curated">MMT curated from a public reel</span>`;
 }
 
@@ -217,18 +221,20 @@ function viewHome() {
 
     <div class="card" style="margin-top:14px">
       <h2>Paste a reel link</h2>
-      <div class="field">
-        <input class="input" id="reelInput" placeholder="instagram.com/reel/… or youtube.com/shorts/…" value="${esc(r.input)}" data-act="reelType">
+      <div class="searchbar" style="margin-bottom:10px">
+        ${icon('sparkles', 20)}
+        <input id="reelInput" placeholder="Paste a reel or shorts link" value="${esc(r.input)}" data-act="reelType">
+        <span class="orb">${icon('search', 16)}</span>
       </div>
       <div class="scrollrow" style="margin-bottom:10px">
         ${samples.map(([l, v]) => `<button class="chip small" data-act="sample" data-v="${esc(v)}">${l}</button>`).join('')}
       </div>
-      <button class="btn coral" data-act="resolve">${r.running ? 'Checking…' : 'Find this trip'}</button>
+      <button class="btn cta" data-act="resolve">${r.running ? 'Checking…' : 'Find this trip'}</button>
 
       <div class="divider"></div>
       <div class="section-title" style="margin:0 0 6px">
-        <h3 style="margin:0">Link resolver (demo panel)</h3>
-        <span class="tiny">simulate outcome</span>
+        <h3 style="margin:0">Link resolver</h3>
+        <span class="section-action">Demo ${'' }<span class="knob">${icon('chevronDown', 12)}</span></span>
       </div>
       <div class="scrollrow" style="margin-bottom:8px">
         ${opts.map(([k, l]) => `<button class="chip small ${r.forced === k ? 'on' : ''}" data-act="force" data-v="${k}">${l}</button>`).join('')}
@@ -239,10 +245,13 @@ function viewHome() {
     <div class="section-title"><h2>Trips from reels this week</h2><span class="tiny">illustrative</span></div>
     ${live.map(t => tripRow(t)).join('')}
 
-    <div class="card" style="background:var(--navy);color:#fff">
-      <h2 style="color:#fff">Not sure about the destination?</h2>
-      <p class="sub" style="color:#c6d2ea">Tell us your month, days and budget. We will rank domestic trips with the same vibe.</p>
-      <button class="btn teal" data-act="goFinder">Find a similar trip</button>
+    <div class="promo" data-act="goFinder">
+      <span class="promo-art">${icon('mountain', 24)}</span>
+      <span class="promo-body">
+        <strong>Not sure about the destination?</strong>
+        <span>Tell us your month, days and budget. We will rank trips with the same vibe.</span>
+      </span>
+      <span class="promo-go">${icon('chevronRight', 20)}</span>
     </div>
     ${footNote()}
   </div>`;
@@ -263,7 +272,7 @@ function resolverPanel() {
         }
       }
       return `<div class="resolver-step ${cls}">
-        <span class="bullet">${cls === 'pass' ? '✓' : cls === 'fail' ? '·' : i + 1}</span>
+        <span class="bullet">${cls === 'pass' ? icon('check', 13) : cls === 'fail' ? '·' : i + 1}</span>
         <span><span class="lbl">${st.lbl}</span><br><span class="res">${note}</span></span>
       </div>`;
     }).join('')}
@@ -316,8 +325,8 @@ function viewTrip() {
 
   return `
   <div class="screen">
-    <a class="backlink" data-act="go" data-v="home">← Back</a>
-    <div class="art tall">${artSvg(t.art, t.id)}
+    <a class="backlink" data-act="go" data-v="home">${icon('arrowLeft', 16)} Back</a>
+    <div class="art tall">${artSvg(t.art, t.id)}<span class="scrim"></span>
       <div class="art-top">${trustBadge(t)}</div>
       <div class="art-bottom">
         <div class="big">${esc(t.destination)}</div>
@@ -344,7 +353,8 @@ function viewTrip() {
       </div>
       <div class="field" style="margin-top:10px">
         <label>Or pick your own dates</label>
-        <input class="input" type="date" value="${esc(S.customDates)}" data-act="customDate">
+        <span class="inputwrap">${icon('calendar', 18)}
+          <input class="input" type="date" value="${esc(S.customDates)}" data-act="customDate"></span>
         <div class="hint">Changing dates refetches the price only. The day plan does not change.</div>
       </div>
     </div>
@@ -390,10 +400,13 @@ function viewTrip() {
       <div class="notice" style="margin-top:10px">This itinerary was drafted with AI help and checked by an MMT travel expert on ${esc(t.reviewedOn || '—')} before it went live. Details can still change on the ground, so we show the review date with every plan.</div>
     </div>
 
-    <div class="card">
-      <h2>Not this one?</h2>
-      <p class="sub">Same vibe, different place — pick a month, days and budget.</p>
-      <button class="btn ghost" data-act="goFinderFrom" data-v="${t.id}">Find similar trips</button>
+    <div class="promo alt" data-act="goFinderFrom" data-v="${t.id}">
+      <span class="promo-art">${icon('search', 24)}</span>
+      <span class="promo-body">
+        <strong>Not this one?</strong>
+        <span>Same vibe, different place — pick a month, days and budget.</span>
+      </span>
+      <span class="promo-go">${icon('chevronRight', 20)}</span>
     </div>
     ${footNote()}
   </div>
@@ -415,12 +428,12 @@ function priceBlock(t, p) {
       <div class="tiny" style="margin-top:4px">fetched ${esc(S.priceTs || nowStr())}</div>
     </div>
   </div>
-  <div class="row" style="border-top:1px solid var(--line);margin-top:10px">
+  <div class="row" style="border-top:1px solid var(--color-divider);margin-top:10px">
     <div><strong style="font-size:13.5px">Travellers</strong><div class="tiny">Total ${money(p.perPerson * S.travellers)}</div></div>
     <div class="chiprow">
-      <button class="chip small" data-act="pax" data-v="-">−</button>
+      <button class="chip small" data-act="pax" data-v="-">${icon('minus', 14)}</button>
       <span style="font-weight:800;min-width:18px;text-align:center">${S.travellers}</span>
-      <button class="chip small" data-act="pax" data-v="+">+</button>
+      <button class="chip small" data-act="pax" data-v="+">${icon('plus', 14)}</button>
     </div>
   </div>
   <div class="tiny" style="margin-top:6px">Plan is stored and reviewed. Price comes from inventory each time you change something.</div>`;
@@ -429,15 +442,15 @@ function priceBlock(t, p) {
 function tripFooter(t, p) {
   const saved = S.saved.includes(t.id);
   return `<div class="sticky-footer">
-    <button class="icbtn ${saved ? 'on' : ''}" data-act="save" data-v="${t.id}">${saved ? '♥' : '♡'}</button>
-    <button class="icbtn" data-act="shareSheet">↗</button>
-    <div class="book"><button class="btn coral" data-act="book">Book this trip<span>${money(p.perPerson * S.travellers)} for ${S.travellers} · ${money(p.perPerson)} each</span></button></div>
+    <button class="icbtn ${saved ? 'on' : ''}" data-act="save" data-v="${t.id}">${icon('heart', 20)}</button>
+    <button class="icbtn" data-act="shareSheet">${icon('share', 20)}</button>
+    <div class="book"><button class="btn cta" data-act="book">Book this trip<span>${money(p.perPerson * S.travellers)} for ${S.travellers} · ${money(p.perPerson)} each</span></button></div>
   </div>`;
 }
 
 function tripSkeleton() {
   return `<div class="screen">
-    <a class="backlink" data-act="go" data-v="home">← Back</a>
+    <a class="backlink" data-act="go" data-v="home">${icon('arrowLeft', 16)} Back</a>
     <div class="sk art"></div>
     <div class="card" style="margin-top:12px">
       <div class="sk line" style="width:40%"></div>
@@ -463,18 +476,18 @@ function viewPreparing() {
   const c = cr(t.creator);
   const notified = S.notifyList.includes(t.id);
   return `<div class="screen">
-    <a class="backlink" data-act="go" data-v="home">← Back</a>
+    <a class="backlink" data-act="go" data-v="home">${icon('arrowLeft', 16)} Back</a>
     <div class="art">${artSvg(t.art, t.id)}<div class="art-top"><span class="badge prep">Preparing</span></div></div>
     <div class="card" style="margin-top:12px">
       <h1>We are preparing this itinerary</h1>
       <p class="sub">Our scan picked up this reel from ${esc(c.handle)} at ${esc(t.detectedAt || 'today')}. An MMT expert is checking the plan before it goes live. This usually takes a few hours.</p>
       <div class="steps">
-        <div class="s done"><div class="c">✓</div><div class="l">Reel found</div></div>
-        <div class="s done"><div class="c">✓</div><div class="l">Draft built</div></div>
+        <div class="s done"><div class="c">${icon('check', 13)}</div><div class="l">Reel found</div></div>
+        <div class="s done"><div class="c">${icon('check', 13)}</div><div class="l">Draft built</div></div>
         <div class="s now"><div class="c">3</div><div class="l">MMT review</div></div>
         <div class="s"><div class="c">4</div><div class="l">Live</div></div>
       </div>
-      <button class="btn ${notified ? 'ghost' : ''}" data-act="notify" data-v="${t.id}">${notified ? '✓ We will message you' : 'Notify me when it is ready'}</button>
+      <button class="btn ${notified ? 'ghost' : ''}" data-act="notify" data-v="${t.id}">${notified ? icon('check', 16) + ' We will message you' : icon('bell', 16) + ' Notify me when it is ready'}</button>
     </div>
     <div class="card">
       <h2>What we already know</h2>
@@ -497,16 +510,16 @@ function viewUnknown() {
   const asked = S.requests.some(r => r.link === S.resolver.input);
   const notified = S.notifyList.includes('link:' + S.resolver.input);
   return `<div class="screen">
-    <a class="backlink" data-act="go" data-v="home">← Back</a>
+    <a class="backlink" data-act="go" data-v="home">${icon('arrowLeft', 16)} Back</a>
     <div class="card">
       <h1>We do not have an itinerary for this reel yet</h1>
       <p class="sub">${esc(link)} is not from a creator we work with or track. Nothing has gone wrong — we simply have not built and checked a plan for it.</p>
       <div class="divider"></div>
       <button class="btn" data-act="goFinder">Find trips with a similar vibe</button>
       <div style="height:8px"></div>
-      <button class="btn ghost" data-act="notifyLink">${notified ? '✓ We will tell you if it lands' : 'Notify me if an itinerary appears'}</button>
+      <button class="btn ghost" data-act="notifyLink">${notified ? icon('check', 16) + ' We will tell you if it lands' : icon('bell', 16) + ' Notify me if an itinerary appears'}</button>
       <div style="height:8px"></div>
-      <button class="btn ghost" data-act="requestItin">${asked ? '✓ Sent to the MMT team' : 'Request this itinerary'}</button>
+      <button class="btn ghost" data-act="requestItin">${asked ? icon('check', 16) + ' Sent to the MMT team' : icon('plus', 16) + ' Request this itinerary'}</button>
       <div class="tiny" style="margin-top:8px">A request flags the reel for the ops team. They decide whether to build it.</div>
     </div>
     <div class="section-title"><h2>Popular right now</h2></div>
@@ -566,16 +579,17 @@ function viewFinder() {
   const src = f.fromTpl ? tpl(f.fromTpl) : null;
   const res = f.ran ? finderResults() : [];
   return `<div class="screen">
-    <a class="backlink" data-act="go" data-v="${src ? 'trip' : 'home'}">← Back</a>
+    <a class="backlink" data-act="go" data-v="${src ? 'trip' : 'home'}">${icon('arrowLeft', 16)} Back</a>
     <h1>Find a trip with the same feel</h1>
     <p class="sub">${src ? 'Matching the vibe of ' + esc(src.destination) + ' — ' + src.vibeTags.join(', ').toLowerCase() + '.' : 'Tell us when you can travel, for how long and what you can spend.'}</p>
 
     <div class="card" style="margin-top:12px">
       <div class="field">
         <label>Travel month</label>
+        <span class="inputwrap">${icon('calendar', 18)}
         <select class="input" data-act="fMonth">
           ${MONTHS.map((m, i) => `<option value="${i}" ${f.month === i ? 'selected' : ''}>${m} ${i < 9 ? '2027' : '2026'}</option>`).join('')}
-        </select>
+        </select></span>
       </div>
       <div class="field">
         <label>Days you have — <strong>${f.days}</strong></label>
@@ -585,7 +599,7 @@ function viewFinder() {
         <label>Budget per person — <strong>${money(f.budget)}</strong></label>
         <input class="input" type="range" min="8000" max="90000" step="2000" value="${f.budget}" data-act="fBudget" style="padding:6px 0;border:0">
       </div>
-      <button class="btn coral" data-act="runFinder">Show me trips</button>
+      <button class="btn cta" data-act="runFinder">Show me trips</button>
     </div>
 
     ${f.ran ? `
@@ -615,7 +629,7 @@ function finderCard(r) {
         </div>
       </div>
       <div style="margin-top:8px">${vm.shared.map(s => `<span class="tag">${esc(s)}</span>`).join('') || `<span class="tag">${esc(t.vibeTags[0])}</span>`}</div>
-      ${!fits ? `<div class="tiny" style="color:#a15c00">Above your budget — the Value tier is the closest we have.</div>` : ''}
+      ${!fits ? `<div class="tiny" style="color:var(--color-warning)">Above your budget — the Value tier is the closest we have.</div>` : ''}
       <div class="btnrow" style="margin-top:8px">
         <button class="btn sm ghost" data-act="openTrip" data-v="${t.id}">Open trip card</button>
         <button class="btn sm ghost" data-act="openTierTrip" data-v="${t.id}" data-t="value">Cheaper version</button>
@@ -628,7 +642,7 @@ function finderCard(r) {
 /* ============================ viewer: saved ============================ */
 function viewSaved() {
   return `<div class="screen">
-    <a class="backlink" data-act="go" data-v="home">← Back</a>
+    <a class="backlink" data-act="go" data-v="home">${icon('arrowLeft', 16)} Back</a>
     <h1>Saved trips</h1>
     ${S.saved.length ? S.saved.map(id => tripRow(tpl(id))).join('') : '<div class="card"><p class="sub">Nothing saved yet. Tap the heart on any trip card.</p></div>'}
     ${footNote()}
@@ -705,8 +719,8 @@ function viewGroup() {
   const confirmed = g.members.filter(m => m.confirmed).length;
 
   return `<div class="screen">
-    <a class="backlink" data-act="go" data-v="trip">← Back to trip</a>
-    <div class="art">${artSvg(t.art, t.id + 'g')}
+    <a class="backlink" data-act="go" data-v="trip">${icon('arrowLeft', 16)} Back to trip</a>
+    <div class="art">${artSvg(t.art, t.id + 'g')}<span class="scrim"></span>
       <div class="art-top">${trustBadge(t)}</div>
       <div class="art-bottom"><div class="big">${esc(t.destination)}</div><div style="font-size:12.5px">Group trip · hosted by ${esc(g.host)}</div></div>
     </div>
@@ -766,8 +780,8 @@ function viewGroup() {
     </div>
 
     <div class="sticky-footer">
-      <button class="icbtn" data-act="go" data-v="trip">↩</button>
-      <div class="book"><button class="btn coral" data-act="groupCheckout">Book for the group<span>Split pay · ${money(p.perPerson)} each</span></button></div>
+      <button class="icbtn" data-act="go" data-v="trip">${icon('arrowLeft', 20)}</button>
+      <div class="book"><button class="btn cta" data-act="groupCheckout">Book for the group<span>Split pay · ${money(p.perPerson)} each</span></button></div>
     </div>
     ${footNote()}
   </div>`;
@@ -785,7 +799,7 @@ function viewCheckout() {
   const paidCount = groupMode ? people.filter(m => m.paid).length : 0;
 
   return `<div class="screen">
-    <a class="backlink" data-act="go" data-v="${groupMode ? 'group' : 'trip'}">← Back</a>
+    <a class="backlink" data-act="go" data-v="${groupMode ? 'group' : 'trip'}">${icon('arrowLeft', 16)} Back</a>
     <h1>Checkout</h1>
     <p class="sub">Mock checkout. No real payment is taken.</p>
 
@@ -817,7 +831,7 @@ function viewCheckout() {
       </div>`).join('')}
       <div class="bar" style="margin-top:10px"><i style="width:${Math.round(paidCount / people.length * 100)}%"></i></div>
       <div class="tiny" style="margin-top:6px">Booking confirms when every share is in. Shares are refunded if the group drops out before confirmation.</div>
-      <button class="btn coral" style="margin-top:10px" data-act="confirmBooking" ${paidCount < people.length ? 'disabled' : ''}>
+      <button class="btn cta" style="margin-top:10px" data-act="confirmBooking" ${paidCount < people.length ? 'disabled' : ''}>
         ${paidCount < people.length ? 'Waiting for ' + (people.length - paidCount) + ' more' : 'Confirm group booking'}</button>
     </div>` : `
     <div class="card">
@@ -825,7 +839,7 @@ function viewCheckout() {
       <div class="row"><div><strong>UPI</strong><div class="tiny">you@okbank · mock</div></div><span class="badge verified">Selected</span></div>
       <div class="row"><div><strong>Pay in parts with friends</strong><div class="tiny">Share the trip and split by UPI</div></div>
         <button class="chip small" data-act="shareSheet">Share</button></div>
-      <button class="btn coral" style="margin-top:12px" data-act="confirmBooking">Pay ${money(total)}</button>
+      <button class="btn cta" style="margin-top:12px" data-act="confirmBooking">Pay ${money(total)}</button>
     </div>`}
     ${footNote()}
   </div>`;
@@ -836,7 +850,7 @@ function viewConfirm() {
   const t = tpl(b.tplId);
   return `<div class="screen">
     <div class="card" style="text-align:center">
-      <div style="font-size:40px">🎉</div>
+      <div class="avatar" style="margin:0 auto 10px;width:52px;height:52px;flex:0 0 52px">${icon('check', 26)}</div>
       <h1>Booking confirmed</h1>
       <p class="sub">Reference ${esc(b.ref)} · mock booking</p>
       <div class="divider"></div>
@@ -884,11 +898,11 @@ function creatorStudio(mine) {
   <div class="card">
     <h2>Send a draft reel</h2>
     <p class="sub">Send it 1 to 2 hours before you post. We draft the itinerary with AI help, an MMT expert checks it, and you approve before it goes live.</p>
-    <div class="field"><label>Destination</label><input class="input" placeholder="e.g. Ladakh" value="${esc(f.destination)}" data-act="dfField" data-k="destination"></div>
+    <div class="field"><label>Destination</label><span class="inputwrap">${icon('mapPin', 18)}<input class="input" placeholder="e.g. Ladakh" value="${esc(f.destination)}" data-act="dfField" data-k="destination"></span></div>
     <div class="field"><label>Trip length — <strong>${f.days} days</strong></label><input class="input" type="range" min="2" max="12" value="${f.days}" data-act="dfField" data-k="days" style="border:0;padding:6px 0"></div>
-    <div class="field"><label>Reel link or working title</label><input class="input" placeholder="instagram.com/reel/…" value="${esc(f.reel)}" data-act="dfField" data-k="reel"></div>
+    <div class="field"><label>Reel link or working title</label><span class="inputwrap">${icon('link', 18)}<input class="input" placeholder="instagram.com/reel/…" value="${esc(f.reel)}" data-act="dfField" data-k="reel"></span></div>
     <div class="field"><label>Notes for the MMT desk</label><input class="input" placeholder="Stays, permits, anything the plan must include" value="${esc(f.notes)}" data-act="dfField" data-k="notes"></div>
-    <button class="btn coral" data-act="submitDraft">Submit draft</button>
+    <button class="btn" data-act="submitDraft">Submit draft</button>
     <div class="tiny" style="margin-top:8px">AI drafting is mocked here. In production the draft is built from your reel, then reviewed by a person before any viewer sees it.</div>
   </div>
 
@@ -924,9 +938,9 @@ function creatorDrafts() {
       </div>
       <div class="steps">
         ${DRAFT_STAGES.map((s, i) => `<div class="s ${i < idx ? 'done' : i === idx ? 'now' : ''}">
-          <div class="c">${i < idx ? '✓' : i + 1}</div><div class="l">${STAGE_LABEL[s]}</div></div>`).join('')}
+          <div class="c">${i < idx ? icon('check', 13) : i + 1}</div><div class="l">${STAGE_LABEL[s]}</div></div>`).join('')}
       </div>
-      ${d.status === 'ready' ? `<button class="btn coral" data-act="approveDraft" data-v="${d.id}">Review and approve</button>`
+      ${d.status === 'ready' ? `<button class="btn" data-act="approveDraft" data-v="${d.id}">Review and approve</button>`
         : d.status === 'live' ? `<div class="notice ok">Live. Put <strong>mmt.app/drop/${esc(d.id)}</strong> in your caption.</div>`
         : `<div class="notice">Waiting on the MMT desk. Switch to the Ops role to move it along in the demo.</div>`}
     </div>`;
@@ -949,7 +963,7 @@ function creatorDash(mine) {
     ${mine.map(t => {
       const ctr = (t.stats.clicks / t.stats.views * 100).toFixed(1);
       const conv = (t.stats.bookings / t.stats.clicks * 100).toFixed(1);
-      return `<div style="padding:10px 0;border-bottom:1px solid var(--line)">
+      return `<div style="padding:10px 0;border-bottom:1px solid var(--color-divider)">
         <div style="display:flex;justify-content:space-between"><strong>${esc(t.destination)}</strong><span class="tiny">${money(t.stats.bookings * 1250)}</span></div>
         <div class="bar" style="margin:6px 0"><i style="width:${Math.min(100, ctr * 6)}%"></i></div>
         <div class="tiny">${t.stats.views.toLocaleString('en-IN')} views → ${t.stats.clicks.toLocaleString('en-IN')} taps (${ctr}%) → ${t.stats.bookings} bookings (${conv}% of taps)</div>
@@ -1073,9 +1087,9 @@ function opsFunnel() {
       </div>
       <div class="bar" style="margin:8px 0 4px"><i style="width:100%"></i></div>
       <div class="tiny">${t.stats.views.toLocaleString('en-IN')} views</div>
-      <div class="bar" style="margin:8px 0 4px"><i style="width:${Math.min(100, ctr * 8)}%;background:var(--navy-2)"></i></div>
+      <div class="bar" style="margin:8px 0 4px"><i style="width:${Math.min(100, ctr * 8)}%;background:var(--color-primary-strong)"></i></div>
       <div class="tiny">${t.stats.clicks.toLocaleString('en-IN')} taps · ${ctr.toFixed(1)}%</div>
-      <div class="bar" style="margin:8px 0 4px"><i style="width:${Math.min(100, conv * 25)}%;background:var(--coral)"></i></div>
+      <div class="bar" style="margin:8px 0 4px"><i style="width:${Math.min(100, conv * 25)}%;background:var(--color-primary-soft)"></i></div>
       <div class="tiny">${t.stats.bookings} bookings · ${conv.toFixed(1)}% of taps</div>
     </div>`;
   }).join('')}

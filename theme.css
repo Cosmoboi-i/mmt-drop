@@ -1,0 +1,130 @@
+/* ============================================================
+   MMT Drop — theme tokens.
+   Single source of truth for colour, type, radius, spacing,
+   elevation and illustration palettes. Nothing else in the
+   project may hardcode a colour; everything reads from here.
+   ============================================================ */
+:root {
+  /* ---- type ---- */
+  --font-sans: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fw-regular: 400;
+  --fw-bold: 700;
+  --fw-black: 900;
+
+  --fs-title: 22px;      /* screen header */
+  --fs-h2: 18px;         /* card / section heading */
+  --fs-h3: 15px;
+  --fs-body: 15px;
+  --fs-value: 18px;      /* bold value inside a form field */
+  --fs-small: 13px;
+  --fs-label: 12px;      /* uppercase field label */
+  --fs-tiny: 11.5px;
+  --ls-label: .5px;
+  --ls-cta: .6px;
+
+  /* ---- brand ---- */
+  --color-primary: #008CFF;
+  --color-primary-strong: #065AF3;
+  --color-primary-soft: #53B2FE;
+  --gradient-primary: linear-gradient(90deg, #53B2FE, #065AF3);
+  --gradient-fab: linear-gradient(135deg, #7B2FF7, #2D4BF0);
+  --gradient-nav-center: linear-gradient(180deg, #53B2FE, #008CFF);
+  --gradient-orb: linear-gradient(135deg, #53B2FE, #7B2FF7);
+
+  /* ---- text ---- */
+  --color-text: #000000;
+  --color-text-secondary: #4A4A4A;
+  --color-text-muted: #9B9B9B;
+  --color-text-inverse: #FFFFFF;
+
+  /* ---- surfaces ---- */
+  --color-bg: #F2F2F2;
+  --color-bg-alt: #E7ECF2;
+  --color-surface: #FFFFFF;
+  --color-input-bg: #F5F5F5;
+  --color-tint: #EAF5FF;
+  --color-border: #E0E0E0;
+  --color-divider: #E0E0E0;
+  --color-scrim: rgba(0, 0, 0, .45);
+
+  /* ---- semantic status ---- */
+  --color-success: #1A8A62;
+  --color-success-bg: #E8F7F1;
+  --color-warning: #A96A00;
+  --color-warning-bg: #FFF6E5;
+  --color-info: var(--color-primary);
+  --color-info-bg: var(--color-tint);
+  --color-accent-new: #6D4AFF;
+  --color-accent-new-bg: #F1EDFF;
+
+  /* ---- promo banner gradients ---- */
+  --gradient-promo-1: linear-gradient(90deg, #E6F7FF, #D9FBF3);
+  --gradient-promo-2: linear-gradient(90deg, #CFF5FF, #FFF3C4);
+
+  /* ---- radius ---- */
+  --radius-card: 16px;
+  --radius-control: 8px;
+  --radius-chip: 8px;
+  --radius-banner: 12px;
+  --radius-pill: 999px;
+
+  /* ---- spacing ---- */
+  --space-page: 16px;
+  --space-card-gap: 12px;
+  --space-inner: 8px;
+  --space-xs: 4px;
+  --control-height: 48px;
+
+  /* ---- elevation ---- */
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, .06);
+  --shadow-raised: 0 4px 14px rgba(0, 0, 0, .12);
+  --border-hairline: 1px solid var(--color-border);
+
+  /* ---- layout ---- */
+  --app-max-width: 440px;
+
+  /* ---- skeleton ---- */
+  --skeleton-base: #E8EAEC;
+  --skeleton-sheen: #F4F5F6;
+
+  /* ============================================================
+     Illustration palettes — flat, blue-led, light grey and white
+     with a darker ink line. Referenced by inline SVG as
+     var(--illus-<key>-1..3).
+     ============================================================ */
+  --illus-ink: #1B3A57;
+  --illus-paper: #FFFFFF;
+  --illus-grey: #D7DEE6;
+
+  --illus-spiti-1: #0B4E96;
+  --illus-spiti-2: #2E8BE6;
+  --illus-spiti-3: #CFE8FF;
+
+  --illus-gokarna-1: #0A6E86;
+  --illus-gokarna-2: #29A8C9;
+  --illus-gokarna-3: #D6F3FB;
+
+  --illus-meghalaya-1: #0E6B54;
+  --illus-meghalaya-2: #2BA88A;
+  --illus-meghalaya-3: #D6F7EC;
+
+  --illus-jaisalmer-1: #9A6410;
+  --illus-jaisalmer-2: #E0A53C;
+  --illus-jaisalmer-3: #FFF0CE;
+
+  --illus-coorg-1: #1E6B3C;
+  --illus-coorg-2: #4CA86A;
+  --illus-coorg-3: #E0F6E4;
+
+  --illus-rishikesh-1: #10557F;
+  --illus-rishikesh-2: #3D9BD1;
+  --illus-rishikesh-3: #DCF0FB;
+
+  --illus-andaman-1: #06557A;
+  --illus-andaman-2: #1E9FC9;
+  --illus-andaman-3: #D3F4F0;
+
+  --illus-kasol-1: #2A3E86;
+  --illus-kasol-2: #5C79DA;
+  --illus-kasol-3: #E1E8FF;
+}
