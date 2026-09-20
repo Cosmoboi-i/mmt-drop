@@ -340,7 +340,7 @@ TEMPLATES.push({
   source: 'watchlist',
   status: 'live',
   creator: 'mohak',
-  reelLink: 'instagram.com/p/DW8x2kQz1ab',
+  reelLink: 'instagram.com/reel/DW8x2kQz1ab',
   postId: 'DW8x2kQz1ab',
   token: 'MMT-ARAKU-4D',
   destination: 'Araku Valley',

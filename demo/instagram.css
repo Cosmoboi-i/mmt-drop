@@ -29,40 +29,68 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .ig-phone.leaving{animation:ig-handoff .34s ease forwards}
 @keyframes ig-handoff{to{opacity:0;transform:scale(.97)}}
 
-/* ---------- header ---------- */
-.ig-topbar{display:flex;align-items:center;gap:18px;padding:14px 16px 10px}
-.ig-topbar .ig-title{font-size:20px;font-weight:700;letter-spacing:.2px}
-
-.ig-userrow{display:flex;align-items:center;gap:10px;padding:6px 14px 12px}
-.ig-avatar{
-  width:36px;height:36px;border-radius:50%;flex:0 0 36px;overflow:hidden;
-  border:1.5px solid var(--ig-line);
+/* ---------- reel ---------- */
+.ig-reel{position:relative;width:100%;height:100vh;height:100dvh;overflow:hidden;background:#000}
+.ig-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#000;
 }
-.ig-avatar svg{display:block;width:100%;height:100%}
-.ig-userrow .ig-who{flex:1;min-width:0;line-height:1.25}
-.ig-userrow .ig-name{font-size:14px;font-weight:700}
-.ig-userrow .ig-place{font-size:12.5px;color:var(--ig-text-dim)}
-.ig-menu{display:flex;flex-direction:column;gap:3px;padding:8px}
-.ig-menu i{display:block;width:18px;height:2px;border-radius:2px;background:var(--ig-text)}
-.ig-menu i:last-child{width:13px}
-
-/* ---------- post ---------- */
-.ig-media{width:100%;aspect-ratio:4/5;display:block;background:#0A0A0A}
-.ig-media svg,.ig-media img{display:block;width:100%;height:100%;object-fit:cover}
-.ig-actions{display:flex;align-items:center;gap:18px;padding:12px 14px 6px}
-.ig-actions .ig-spacer{flex:1}
-.ig-actions button{display:flex;align-items:center;justify-content:center}
-.ig-share-btn{position:relative}
-.ig-share-btn::after{
-  content:"";position:absolute;inset:-10px;border-radius:50%;
-  animation:ig-hint 2.4s ease-in-out infinite;border:1.5px solid var(--ig-blue);opacity:0;
+/* shown only while the video is paused */
+.ig-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;
+  color:rgba(255,255,255,.85);filter:drop-shadow(0 2px 10px rgba(0,0,0,.6));
+  opacity:0;pointer-events:none;transition:opacity .15s ease;display:flex;
 }
-@keyframes ig-hint{0%,70%,100%{opacity:0;transform:scale(.7)}35%{opacity:.55;transform:scale(1)}}
-.ig-likes{padding:2px 14px;font-size:13.5px;font-weight:700}
-.ig-caption{padding:4px 14px 2px;font-size:13.5px;line-height:1.4}
-.ig-caption b{font-weight:700;margin-right:6px}
-.ig-caption s{color:var(--ig-text-dim)}
-.ig-meta{padding:4px 14px 20px;font-size:11.5px;color:var(--ig-text-faint);text-transform:uppercase;letter-spacing:.3px}
+.ig-video.paused ~ .ig-play{opacity:1;pointer-events:auto}
+
+.ig-scrim{position:absolute;left:0;right:0;pointer-events:none}
+.ig-scrim.top{top:0;height:130px;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,0))}
+.ig-scrim.bottom{bottom:0;height:260px;background:linear-gradient(0deg,rgba(0,0,0,.65),rgba(0,0,0,0))}
+
+.ig-reel-top{
+  position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px calc(14px + env(safe-area-inset-top));color:var(--ig-text);
+}
+.ig-reel-title{display:flex;align-items:center;gap:6px;font-size:21px;font-weight:700}
+.ig-reel-cam{display:flex}
+
+.ig-sound{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.5);color:var(--ig-text);
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* right rail */
+.ig-rail{
+  position:absolute;right:10px;bottom:calc(96px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;align-items:center;gap:20px;color:var(--ig-text);
+}
+.ig-rail-item{display:flex;flex-direction:column;align-items:center;gap:5px}
+.ig-rail-ic{display:flex;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+.ig-rail-n{font-size:12.5px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.ig-disc{
+  width:30px;height:30px;border-radius:7px;border:1.5px solid rgba(255,255,255,.85);
+  display:flex;align-items:center;justify-content:center;color:var(--ig-text);margin-top:4px;
+}
+
+/* bottom overlay */
+.ig-reel-foot{
+  position:absolute;left:16px;right:74px;bottom:calc(20px + env(safe-area-inset-bottom));
+  color:var(--ig-text);
+}
+.ig-reel-who{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.ig-reel-name{font-size:14px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.ig-follow{
+  border:1px solid rgba(255,255,255,.85);border-radius:8px;padding:5px 12px;
+  font-size:12.5px;font-weight:600;color:var(--ig-text);
+}
+.ig-reel-caption{
+  font-size:13.5px;line-height:1.4;margin-bottom:9px;text-shadow:0 1px 3px rgba(0,0,0,.5);
+}
+.ig-reel-caption s{color:rgba(255,255,255,.7)}
+.ig-reel-audio{
+  display:flex;align-items:center;gap:7px;font-size:12.5px;
+  text-shadow:0 1px 3px rgba(0,0,0,.5);opacity:.95;
+}
 
 /* ---------- share sheet ---------- */
 .ig-backdrop{
@@ -80,6 +108,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
 .ig-backdrop.closing .ig-sheet{animation:ig-down .24s ease forwards}
 @keyframes ig-up{from{transform:translateY(100%)}to{transform:none}}
 @keyframes ig-down{to{transform:translateY(100%)}}
+
+.ig-avatar{width:34px;height:34px;border-radius:50%;flex:0 0 34px;overflow:hidden;display:block}
+.ig-avatar svg{display:block;width:100%;height:100%}
 
 .ig-grab{display:block;width:38px;height:4px;border-radius:2px;background:var(--ig-sheet-line);margin:2px auto 16px}
 

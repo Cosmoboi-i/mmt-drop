@@ -8,8 +8,12 @@ const POST = {
   place: 'Borra Caves',
   captionStruck: 'Indiana Jones',
   caption: 'Indian Mohak',
-  url: 'https://www.instagram.com/p/DW8x2kQz1ab/',
-  likes: '12,418'
+  url: 'https://www.instagram.com/reel/DW8x2kQz1ab/',
+  video: '../assets/Borra-caves.mp4',
+  poster: '../assets/borra-caves.jpg',
+  likes: '210K',
+  comments: '145',
+  shares: '57.4K'
 };
 
 /* ---------- inline art, so nothing loads from the network ---------- */
@@ -94,6 +98,16 @@ const ICON = {
   doc: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h10M4 11h8M4 16h6"/><path d="M18 5v14M16 5h4M16 19h4"/></svg>`,
   copy: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></svg>`,
   people: `<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="8" r="3.4"/><circle cx="16.5" cy="9" r="2.8"/><path d="M2.5 18c0-3.2 2.9-5 6.5-5s6.5 1.8 6.5 5z"/><path d="M16.5 13.4c2.9 0 5 1.5 5 4.6h-4.2c0-1.8-.5-3.3-1.4-4.5z"/></svg>`,
+  playBig: `<svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>`,
+  chevronDown: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`,
+  igGlyph: `<svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg>`,
+  heartFill: `<svg width="30" height="30" viewBox="0 0 24 24" fill="#FF3040"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1l8.8 8.8 8.8-8.8a5 5 0 0 0 0-7.1z"/></svg>`,
+  commentOutline: `<svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-4.2-1L3 20l1.2-4.4A8.4 8.4 0 0 1 3 11.5a8.5 8.5 0 0 1 9-8.4 8.4 8.4 0 0 1 9 8.4z"/></svg>`,
+  planeOutline: `<svg width="29" height="29" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>`,
+  dots: `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>`,
+  music: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>`,
+  soundOn: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>`,
+  soundOff: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>`,
   searchSm: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.6-3.6"/></svg>`,
   personAdd: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.6"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M19 8v6M16 11h6"/></svg>`,
   personPlaceholder: `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#4A4A4E"/><circle cx="32" cy="25" r="11" fill="#8E8E93"/><path d="M10 60c0-12 10-18 22-18s22 6 22 18z" fill="#8E8E93"/></svg>`,
@@ -107,38 +121,40 @@ const ICON = {
 const app = document.getElementById('ig-app');
 let sheetOpen = false;
 
-function postScreen() {
+function reelScreen() {
   return `
-  <div class="ig-topbar">
-    <button aria-label="Back">${ICON.back}</button>
-    <span class="ig-title">Posts</span>
-  </div>
+  <div class="ig-reel">
+    <video id="ig-video" class="ig-video" src="${POST.video}" poster="${POST.poster}"
+      muted loop playsinline autoplay preload="auto" data-act="togglePlay"></video>
+    <span class="ig-play" data-act="togglePlay">${ICON.playBig}</span>
+    <span class="ig-scrim top"></span>
+    <span class="ig-scrim bottom"></span>
 
-  <div class="ig-userrow">
-    <span class="ig-avatar">${ART.avatar}</span>
-    <span class="ig-who">
-      <span class="ig-name">${POST.user}</span><br>
-      <span class="ig-place">${POST.place}</span>
-    </span>
-    <button class="ig-menu" aria-label="More"><i></i><i></i></button>
-  </div>
+    <div class="ig-reel-top">
+      <span class="ig-reel-title">Reels ${ICON.chevronDown}</span>
+      <span class="ig-reel-cam">${ICON.igGlyph}</span>
+    </div>
 
-  <div class="ig-media">
-    <img src="../assets/borra-caves.jpg" alt="Inside Borra Caves"
-         onerror="this.replaceWith(Object.assign(document.createElement('div'),{innerHTML:ART.cave}).firstChild)">
-  </div>
+    <button class="ig-sound" data-act="toggleSound" aria-label="Sound">${ICON.soundOff}</button>
 
-  <div class="ig-actions">
-    <button aria-label="Like">${ICON.heart}</button>
-    <button aria-label="Comment">${ICON.comment}</button>
-    <button class="ig-share-btn" data-act="openSheet" aria-label="Share">${ICON.plane}</button>
-    <span class="ig-spacer"></span>
-    <button aria-label="Save">${ICON.bookmark}</button>
-  </div>
+    <div class="ig-rail">
+      <span class="ig-rail-item"><span class="ig-rail-ic">${ICON.heartFill}</span><span class="ig-rail-n">${POST.likes}</span></span>
+      <span class="ig-rail-item"><span class="ig-rail-ic">${ICON.commentOutline}</span><span class="ig-rail-n">${POST.comments}</span></span>
+      <span class="ig-rail-item" data-act="openSheet"><span class="ig-rail-ic">${ICON.planeOutline}</span><span class="ig-rail-n">${POST.shares}</span></span>
+      <span class="ig-rail-item"><span class="ig-rail-ic">${ICON.dots}</span></span>
+      <span class="ig-disc">${ICON.music}</span>
+    </div>
 
-  <div class="ig-likes">${POST.likes} likes</div>
-  <div class="ig-caption"><b>${POST.user}</b><s>${POST.captionStruck}</s> ${POST.caption}</div>
-  <div class="ig-meta">2 hours ago</div>`;
+    <div class="ig-reel-foot">
+      <div class="ig-reel-who">
+        <span class="ig-avatar">${ART.avatar}</span>
+        <span class="ig-reel-name">${POST.user}</span>
+        <button class="ig-follow">Follow</button>
+      </div>
+      <div class="ig-reel-caption"><s>${POST.captionStruck}</s> ${POST.caption} · ${POST.place}</div>
+      <div class="ig-reel-audio">${ICON.music}<span>Original audio · ${POST.user}</span></div>
+    </div>
+  </div>`;
 }
 
 function shareSheet() {
@@ -185,8 +201,25 @@ function shareSheet() {
   </div>`;
 }
 
+let soundOn = false;
+
 function render() {
-  app.innerHTML = postScreen() + (sheetOpen ? shareSheet() : '') + '<div class="ig-handoff" id="ig-flash"></div>';
+  const v = document.getElementById('ig-video');
+  const at = v ? v.currentTime : 0;
+  app.innerHTML = reelScreen() + (sheetOpen ? shareSheet() : '') + '<div class="ig-handoff" id="ig-flash"></div>';
+  const nv = document.getElementById('ig-video');
+  if (nv) {
+    nv.muted = !soundOn;
+    if (at) nv.currentTime = at;
+    /* Autoplay only ever works muted, and a play() issued before the source is
+       ready loses the race, so try again once it can play. If the browser still
+       refuses, the paused class shows a tap-to-play affordance. */
+    const start = () => nv.play().catch(() => {});
+    start();
+    nv.addEventListener('canplay', start, { once: true });
+    nv.addEventListener('play', () => nv.classList.remove('paused'));
+    nv.addEventListener('pause', () => nv.classList.add('paused'));
+  }
 }
 
 /* ---------- interactions ---------- */
@@ -204,6 +237,22 @@ document.addEventListener('click', (e) => {
       bd.classList.add('closing');
       setTimeout(() => { sheetOpen = false; render(); }, 220);
     }
+  }
+
+  if (act === 'togglePlay') {
+    const v = document.getElementById('ig-video');
+    if (v) { v.paused ? v.play().catch(() => {}) : v.pause(); }
+  }
+
+  if (act === 'toggleSound') {
+    soundOn = !soundOn;
+    const v = document.getElementById('ig-video');
+    if (v) {
+      v.muted = !soundOn;
+      if (soundOn) v.play().catch(() => { soundOn = false; v.muted = true; });
+    }
+    el.innerHTML = soundOn ? ICON.soundOn : ICON.soundOff;
+    return;
   }
 
   if (act === 'copy') {
