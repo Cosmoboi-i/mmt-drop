@@ -64,7 +64,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;paddin
   position:absolute;right:10px;bottom:calc(96px + env(safe-area-inset-bottom));
   display:flex;flex-direction:column;align-items:center;gap:20px;color:var(--ig-text);
 }
-.ig-rail-item{display:flex;flex-direction:column;align-items:center;gap:5px}
+.ig-rail-item{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px}
+
+/* points at the share icon until the sheet has been opened once */
+.ig-hint{
+  position:absolute;right:100%;top:14px;transform:translateY(-50%);margin-right:10px;
+  display:flex;align-items:center;gap:5px;white-space:nowrap;pointer-events:none;
+  background:rgba(0,0,0,.55);color:var(--ig-text);border-radius:999px;
+  padding:6px 10px;font-size:12px;font-weight:600;
+  animation:ig-point 1.9s ease-in-out infinite;
+}
+@keyframes ig-point{0%,100%{transform:translateY(-50%) translateX(0);opacity:.85}
+                    50%{transform:translateY(-50%) translateX(5px);opacity:1}}
 .ig-rail-ic{display:flex;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
 .ig-rail-n{font-size:12.5px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.5)}
 .ig-disc{

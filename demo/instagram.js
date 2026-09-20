@@ -98,6 +98,7 @@ const ICON = {
   doc: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h10M4 11h8M4 16h6"/><path d="M18 5v14M16 5h4M16 19h4"/></svg>`,
   copy: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></svg>`,
   people: `<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="8" r="3.4"/><circle cx="16.5" cy="9" r="2.8"/><path d="M2.5 18c0-3.2 2.9-5 6.5-5s6.5 1.8 6.5 5z"/><path d="M16.5 13.4c2.9 0 5 1.5 5 4.6h-4.2c0-1.8-.5-3.3-1.4-4.5z"/></svg>`,
+  arrowRight: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>`,
   playBig: `<svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>`,
   chevronDown: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`,
   igGlyph: `<svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg>`,
@@ -140,7 +141,10 @@ function reelScreen() {
     <div class="ig-rail">
       <span class="ig-rail-item"><span class="ig-rail-ic">${ICON.heartFill}</span><span class="ig-rail-n">${POST.likes}</span></span>
       <span class="ig-rail-item"><span class="ig-rail-ic">${ICON.commentOutline}</span><span class="ig-rail-n">${POST.comments}</span></span>
-      <span class="ig-rail-item" data-act="openSheet"><span class="ig-rail-ic">${ICON.planeOutline}</span><span class="ig-rail-n">${POST.shares}</span></span>
+      <span class="ig-rail-item" data-act="openSheet">
+        ${hintSeen ? '' : `<span class="ig-hint">Tap to share ${ICON.arrowRight}</span>`}
+        <span class="ig-rail-ic">${ICON.planeOutline}</span><span class="ig-rail-n">${POST.shares}</span>
+      </span>
       <span class="ig-rail-item"><span class="ig-rail-ic">${ICON.dots}</span></span>
       <span class="ig-disc">${ICON.music}</span>
     </div>
@@ -202,6 +206,7 @@ function shareSheet() {
 }
 
 let soundOn = false;
+let hintSeen = false;
 
 function render() {
   const v = document.getElementById('ig-video');
@@ -228,7 +233,7 @@ document.addEventListener('click', (e) => {
   if (!el) return;
   const act = el.dataset.act;
 
-  if (act === 'openSheet') { sheetOpen = true; render(); }
+  if (act === 'openSheet') { sheetOpen = true; hintSeen = true; render(); }
 
   if (act === 'closeSheet') {
     if (e.target.closest('[data-stop]') && el.classList.contains('ig-backdrop')) return;
