@@ -14,7 +14,7 @@ plain words: the plan is stored and reviewed, the number is live.
 
 ## Flow across the three scenarios
 
-**1. Creator Circle (partner creator).** The creator sends a draft reel 1–2 hours before posting
+**1. Creator Circle (partner creator).** The creator sends a draft reel 3–4 hours before posting
 (Creator role → Studio). MMT drafts the template, an expert reviews it (Ops role → Review queue), the
 creator approves it (Creator → My drafts). The reel goes up with the link in the caption. A viewer who
 taps it lands on a finished trip card labelled **Creator verified**, and the creator earns a payout on

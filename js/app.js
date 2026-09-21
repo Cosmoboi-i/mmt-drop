@@ -306,7 +306,7 @@ function viewHome() {
       <span class="promo-art">${icon('video', 24)}</span>
       <span class="promo-body">
         <strong>See it from the reel side</strong>
-        <span>Open a sample Instagram post and share it to MMT.</span>
+        <span>Open a sample Instagram reel and share it to MMT.</span>
       </span>
       <span class="promo-go">${icon('chevronRight', 20)}</span>
     </a>
@@ -995,7 +995,7 @@ function creatorStudio(mine) {
   return `
   <div class="card">
     <h2>Send a draft reel</h2>
-    <p class="sub">Send it 1 to 2 hours before you post. We draft the itinerary with AI help, an MMT expert checks it, and you approve before it goes live.</p>
+    <p class="sub">Send it 3 to 4 hours before you post. We draft the itinerary with AI help, an MMT expert checks it, and you approve before it goes live.</p>
     <div class="field"><label>Destination</label><span class="inputwrap">${icon('mapPin', 18)}<input class="input" placeholder="e.g. Ladakh" value="${esc(f.destination)}" data-act="dfField" data-k="destination"></span></div>
     <div class="field"><label>Trip length — <strong>${f.days} days</strong></label><input class="input" type="range" min="2" max="12" value="${f.days}" data-act="dfField" data-k="days" style="border:0;padding:6px 0"></div>
     <div class="field"><label>Reel link or working title</label><span class="inputwrap">${icon('link', 18)}<input class="input" placeholder="instagram.com/reel/…" value="${esc(f.reel)}" data-act="dfField" data-k="reel"></span></div>
